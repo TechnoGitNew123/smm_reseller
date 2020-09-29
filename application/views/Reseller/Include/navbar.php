@@ -65,7 +65,7 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <?php if($reseller_info[0]['reseller_logo']){ ?>
-          <img src="<?php echo base_url() ?>assets/images/reseller/<?php echo $reseller_info[0]['reseller_logo'];  ?>" class="img-circle elevation-2" alt="User Image">
+          <img src="<?php echo $reseller_info[0]['reseller_logo'];  ?>" class="img-circle elevation-2" alt="User Image">
         <?php } ?>
       </div>
       <div class="info">
@@ -81,6 +81,15 @@
             <i class="nav-icon fas fa-th"></i>
             <p>
               Dashboard
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a target="_blank" href="https://vcclhosting.com/" class="nav-link head">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Become Reseller
             </p>
           </a>
         </li>
@@ -183,9 +192,21 @@
           </a>
           <ul class="nav nav-treeview" style="display: none;">
             <li class="nav-item">
+              <a href="<?php echo base_url(); ?>Reseller/Res_Invoice/invoice_setting" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Invoice Setting</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="<?php echo base_url(); ?>Reseller/Res_Invoice/invoice_list" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>My Invoice List(Admin)</p>
+                <p>Invoice List(By Admin)</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>Reseller/Res_Invoice/invoice_to_cust_list" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Invoice List(To Customer)</p>
               </a>
             </li>
             <li class="nav-item">
@@ -236,6 +257,12 @@
               <a <?php if(isset($update_testimonial)){ echo 'href="'.$act_link.'"'; } else{ ?> href="<?php echo base_url(); ?>Reseller/Res_Master/testimonial" <?php } ?> class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Testimonial</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a <?php if(isset($update_blog)){ echo 'href="'.$act_link.'"'; } else{ ?> href="<?php echo base_url(); ?>Reseller/Res_Master/blog" <?php } ?> class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Blog</p>
               </a>
             </li>
           </ul>

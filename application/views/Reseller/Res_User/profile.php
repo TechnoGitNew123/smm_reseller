@@ -107,20 +107,41 @@
                       <label>Reseller Confirm Password</label>
                       <input type="password" class="form-control form-control-sm" id="reseller_c_password" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_password']; } ?>" placeholder="Enter Reseller Password" required>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       <label>GST No.</label>
                       <input type="text" class="form-control form-control-sm" name="reseller_gst_no" id="reseller_gst_no" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_gst_no']; } ?>" placeholder="GST No.">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       <label>PAN No.</label>
                       <input type="text" class="form-control form-control-sm" name="reseller_pan_no" id="reseller_pan_no" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_pan_no']; } ?>" placeholder="Pan No.">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       <label>Opening Balance</label>
                       <input type="number" class="form-control form-control-sm" name="reseller_op_crd_balance" id="reseller_op_crd_balance" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_op_crd_balance']; } ?>" placeholder="Enter Opening Balance" disabled>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
+                      <hr>
+                      <label>Bank Account Details</label>
                     </div>
+
+
+                    <div class="form-group col-md-6">
+                      <label>Bank Name</label>
+                      <input type="text" class="form-control form-control-sm" name="reseller_bank" id="reseller_bank" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_bank']; } ?>" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Bank Branch</label>
+                      <input type="text" class="form-control form-control-sm" name="reseller_bank_branch" id="reseller_bank_branch" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_bank_branch']; } ?>" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Bank Account Number</label>
+                      <input type="text" class="form-control form-control-sm" name="reseller_bank_acc_no" id="reseller_bank_acc_no" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_bank_acc_no']; } ?>" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Bank IFSC Number</label>
+                      <input type="text" class="form-control form-control-sm" name="reseller_bank_ifsc" id="reseller_bank_ifsc" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_bank_ifsc']; } ?>" placeholder="">
+                    </div>
+
 
                     <div class="form-group col-md-4">
                       <label>Reseller Image</label>

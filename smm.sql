@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2020 at 05:42 AM
+-- Generation Time: Sep 29, 2020 at 09:48 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -6378,6 +6378,34 @@ INSERT INTO `smm_bank_account` (`bank_account_id`, `company_id`, `bank_account_n
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `smm_blog`
+--
+
+CREATE TABLE `smm_blog` (
+  `blog_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `blog_author` varchar(250) NOT NULL,
+  `blog_date` varchar(50) NOT NULL,
+  `blog_name` varchar(350) NOT NULL,
+  `blog_descr` text NOT NULL,
+  `blog_image` varchar(150) NOT NULL,
+  `blog_status` int(11) NOT NULL DEFAULT 1,
+  `blog_addedby` int(11) DEFAULT 0,
+  `blog_addedby_type` int(11) NOT NULL DEFAULT 1 COMMENT '1 = Admin, 2 = Reseller',
+  `blog_created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `blog_updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `smm_blog`
+--
+
+INSERT INTO `smm_blog` (`blog_id`, `company_id`, `blog_author`, `blog_date`, `blog_name`, `blog_descr`, `blog_image`, `blog_status`, `blog_addedby`, `blog_addedby_type`, `blog_created_at`, `blog_updated_at`) VALUES
+(1, 1, 'Demo Aut', '29-09-2020', 'sdfsda fasdf', '<p>asdf asdfasdf</p><p>asdfasdf asdf</p><p>asdf asdfasdf</p><p>asdfasdfasdf</p>', 'blog_1_1601362897.jpg', 1, 3, 2, '2020-09-29 12:31:37', '2020-09-29 07:01:56');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `smm_branch`
 --
 
@@ -6503,7 +6531,8 @@ INSERT INTO `smm_commission` (`commission_id`, `company_id`, `commission_date`, 
 (1, 1, '27-09-2020', 1, 3, 6000, 1, '2020-09-27 14:29:50'),
 (2, 1, '27-09-2020', 2, 2, 4000, 2, '2020-09-27 14:29:50'),
 (3, 1, '27-09-2020', 4, 3, 6000, 1, '2020-09-27 14:36:03'),
-(4, 1, '27-09-2020', 5, 2, 4000, 2, '2020-09-27 14:36:03');
+(4, 1, '27-09-2020', 5, 2, 4000, 2, '2020-09-27 14:36:03'),
+(5, 1, '29-09-2020', 7, 2, 4000, 1, '2020-09-29 13:07:47');
 
 -- --------------------------------------------------------
 
@@ -7057,6 +7086,7 @@ CREATE TABLE `smm_invoice` (
   `invoice_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `invoice_no` int(11) NOT NULL,
+  `invoice_no_prefix` varchar(50) NOT NULL,
   `invoice_date` varchar(25) NOT NULL,
   `order_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
@@ -7088,13 +7118,15 @@ CREATE TABLE `smm_invoice` (
 -- Dumping data for table `smm_invoice`
 --
 
-INSERT INTO `smm_invoice` (`invoice_id`, `company_id`, `invoice_no`, `invoice_date`, `order_id`, `client_id`, `reseller_id`, `project_id`, `package_id`, `reseller_package_id`, `package_name`, `invoice_client_name`, `invoice_client_address`, `country_id`, `state_id`, `city_id`, `invoice_client_mobile`, `invoice_client_email`, `gst_slab_per`, `invoice_basic_amt`, `invoice_gst_amt`, `invoice_net_amt`, `invoice_note`, `invoice_status`, `invoice_addedby`, `invoice_addedby_type`, `invoice_created_at`, `invoice_updated_at`) VALUES
-(1, 1, 1, '27-09-2020', 1, 6, 3, 0, 4, 4, 'Demo Package 2', 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 5, 28571.43, 1428.57, 30000, '', 1, 0, 3, '2020-09-27 14:29:50', '2020-09-27 08:59:50'),
-(2, 1, 1, '27-09-2020', 0, 3, 2, 0, 4, 4, 'Demo Package 2', 'Reseller 222', 'sd dfg sdfgsg', 101, 22, 2652, '9966332211', 'fggf@ghj.kkk', 5, 22857.14, 1142.86, 24000, '', 1, 0, 4, '2020-09-27 14:29:50', '2020-09-27 09:06:52'),
-(3, 1, 1, '27-09-2020', 0, 2, 0, 0, 4, 1, 'Demo Package 2', 'Reseller 111', 'sdfgsdfg', 101, 22, 2652, '9876543210', 'fgdfg@dfg.jhkl', 5, 19047.62, 952.38, 20000, '', 1, 0, 4, '2020-09-27 14:29:51', '2020-09-27 09:06:49'),
-(4, 1, 2, '27-09-2020', 2, 6, 3, 0, 4, 4, 'Demo Package 2', 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 5, 28571.43, 1428.57, 30000, '', 1, 0, 3, '2020-09-27 14:36:03', '2020-09-27 09:06:03'),
-(5, 1, 2, '27-09-2020', 0, 3, 2, 0, 4, 4, 'Demo Package 2', 'Reseller 222', 'sd dfg sdfgsg', 101, 22, 2652, '9966332211', 'fggf@ghj.kkk', 5, 22857.14, 1142.86, 24000, '', 1, 0, 4, '2020-09-27 14:36:03', '2020-09-27 09:06:03'),
-(6, 1, 2, '27-09-2020', 0, 2, 0, 0, 4, 1, 'Demo Package 2', 'Reseller 111', 'sdfgsdfg', 101, 22, 2652, '9876543210', 'fgdfg@dfg.jhkl', 5, 19047.62, 952.38, 20000, '', 1, 0, 4, '2020-09-27 14:36:03', '2020-09-27 09:06:03');
+INSERT INTO `smm_invoice` (`invoice_id`, `company_id`, `invoice_no`, `invoice_no_prefix`, `invoice_date`, `order_id`, `client_id`, `reseller_id`, `project_id`, `package_id`, `reseller_package_id`, `package_name`, `invoice_client_name`, `invoice_client_address`, `country_id`, `state_id`, `city_id`, `invoice_client_mobile`, `invoice_client_email`, `gst_slab_per`, `invoice_basic_amt`, `invoice_gst_amt`, `invoice_net_amt`, `invoice_note`, `invoice_status`, `invoice_addedby`, `invoice_addedby_type`, `invoice_created_at`, `invoice_updated_at`) VALUES
+(1, 1, 1, '', '27-09-2020', 1, 6, 3, 0, 4, 4, 'Demo Package 2', 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 5, 28571.43, 1428.57, 30000, '', 1, 0, 3, '2020-09-27 14:29:50', '2020-09-27 08:59:50'),
+(2, 1, 1, '', '27-09-2020', 0, 3, 2, 0, 4, 4, 'Demo Package 2', 'Reseller 222', 'sd dfg sdfgsg', 101, 22, 2652, '9966332211', 'fggf@ghj.kkk', 5, 22857.14, 1142.86, 24000, '', 1, 0, 4, '2020-09-27 14:29:50', '2020-09-27 09:06:52'),
+(3, 1, 1, '', '27-09-2020', 0, 2, 0, 0, 4, 1, 'Demo Package 2', 'Reseller 111', 'sdfgsdfg', 101, 22, 2652, '9876543210', 'fgdfg@dfg.jhkl', 5, 19047.62, 952.38, 20000, '', 1, 0, 4, '2020-09-27 14:29:51', '2020-09-27 09:06:49'),
+(4, 1, 2, '', '27-09-2020', 2, 6, 3, 0, 4, 4, 'Demo Package 2', 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 5, 28571.43, 1428.57, 30000, '', 1, 0, 3, '2020-09-27 14:36:03', '2020-09-27 09:06:03'),
+(5, 1, 2, '', '27-09-2020', 0, 3, 2, 0, 4, 4, 'Demo Package 2', 'Reseller 222', 'sd dfg sdfgsg', 101, 22, 2652, '9966332211', 'fggf@ghj.kkk', 5, 22857.14, 1142.86, 24000, '', 1, 0, 4, '2020-09-27 14:36:03', '2020-09-27 09:06:03'),
+(6, 1, 2, '', '27-09-2020', 0, 2, 0, 0, 4, 1, 'Demo Package 2', 'Reseller 111', 'sdfgsdfg', 101, 22, 2652, '9876543210', 'fgdfg@dfg.jhkl', 5, 19047.62, 952.38, 20000, '', 1, 0, 4, '2020-09-27 14:36:03', '2020-09-27 09:06:03'),
+(7, 1, 3, 'INV-', '29-09-2020', 3, 3, 2, 0, 4, 1, 'Demo Package 2', 'Reseller 222', 'sd dfg sdfgsg', 101, 22, 2652, '9966332211', 'fggf@ghj.kkk', 5, 22857.14, 1142.86, 24000, '', 1, 0, 3, '2020-09-29 13:07:47', '2020-09-29 07:37:47'),
+(8, 1, 3, 'INV-', '29-09-2020', 0, 2, 0, 0, 4, 1, 'Demo Package 2', 'Reseller 111', 'sdfgsdfg', 101, 22, 2652, '9876543210', 'fgdfg@dfg.jhkl', 5, 19047.62, 952.38, 20000, '', 1, 0, 4, '2020-09-29 13:07:47', '2020-09-29 07:37:47');
 
 -- --------------------------------------------------------
 
@@ -7393,7 +7425,8 @@ CREATE TABLE `smm_order` (
 
 INSERT INTO `smm_order` (`order_id`, `company_id`, `order_no`, `order_date`, `client_id`, `reseller_id`, `order_client_name`, `order_client_address`, `country_id`, `state_id`, `city_id`, `order_client_mobile`, `order_client_email`, `package_id`, `reseller_package_id`, `package_name`, `gst_slab_per`, `order_basic_amount`, `order_gst_amount`, `order_net_amount`, `order_status`, `payment_status`, `razorpay_payment_id`, `razorpay_order_id`, `order_addedby`, `order_added_date`) VALUES
 (1, 1, 1, '27-09-2020', 6, 3, 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 4, 4, 'Demo Package 2', 5, 28571.43, 1428.57, 30000, 1, 1, '', '', 6, '2020-09-27 14:29:50'),
-(2, 1, 2, '27-09-2020', 6, 3, 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 4, 4, 'Demo Package 2', 5, 28571.43, 1428.57, 30000, 1, 1, 'pay_Fhzy893Jcq8tVY', 'order_FhzxpAjCXcqqOs', 6, '2020-09-27 14:36:03');
+(2, 1, 2, '27-09-2020', 6, 3, 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, 2652, '9876543211', 'demo@email.com', 4, 4, 'Demo Package 2', 5, 28571.43, 1428.57, 30000, 1, 1, 'pay_Fhzy893Jcq8tVY', 'order_FhzxpAjCXcqqOs', 6, '2020-09-27 14:36:03'),
+(3, 1, 1, '29-09-2020', 3, 2, 'Reseller 222', 'sd dfg sdfgsg', 101, 22, 2652, '9966332211', 'fggf@ghj.kkk', 4, 1, 'Demo Package 2', 5, 22857.14, 1142.86, 24000, 1, 1, 'pay_FilX9ZkErxMStx', 'order_FilWVsBkFHW7GR', 3, '2020-09-29 13:07:47');
 
 -- --------------------------------------------------------
 
@@ -7480,6 +7513,7 @@ CREATE TABLE `smm_package` (
   `package_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `package_type` varchar(50) NOT NULL,
+  `package_category_id` int(11) NOT NULL,
   `package_name` varchar(250) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `package_per_duration` varchar(150) NOT NULL,
@@ -7500,9 +7534,35 @@ CREATE TABLE `smm_package` (
 -- Dumping data for table `smm_package`
 --
 
-INSERT INTO `smm_package` (`package_id`, `company_id`, `package_type`, `package_name`, `employee_id`, `package_per_duration`, `package_tot_duration`, `package_days`, `package_cost`, `package_revisions`, `gst_slab_id`, `package_image`, `package_descr`, `package_status`, `package_addedby`, `package_created_at`, `package_updated_at`) VALUES
-(1, 1, '1', 'Demo111', 1, '30', '30', 1, 10000, '25', 2, 'package_1_1598785250.jpg', '<p>dcbdf xdcvbb</p>', 1, 1, '2020-08-30 16:30:50', '2020-09-20 06:41:02'),
-(4, 1, '2', 'Demo Package 2', 0, '60', '', 60, 20000, '5', 2, 'package_4_1600571334.png', '<p>sdg sdfg sdfg sdgsdgsdg sdg</p>', 1, 1, '2020-09-20 08:38:54', '2020-09-20 06:40:56');
+INSERT INTO `smm_package` (`package_id`, `company_id`, `package_type`, `package_category_id`, `package_name`, `employee_id`, `package_per_duration`, `package_tot_duration`, `package_days`, `package_cost`, `package_revisions`, `gst_slab_id`, `package_image`, `package_descr`, `package_status`, `package_addedby`, `package_created_at`, `package_updated_at`) VALUES
+(1, 1, '1', 1, 'Demo111', 1, '30', '30', 1, 10000, '25', 2, 'package_1_1598785250.jpg', '<p>dcbdf xdcvbb</p>', 1, 1, '2020-08-30 16:30:50', '2020-09-29 06:02:26'),
+(4, 1, '2', 2, 'Demo Package 2', 0, '60', '', 60, 20000, '5', 2, 'package_4_1600571334.png', '<p>sdg sdfg sdfg sdgsdgsdg sdg</p>', 1, 1, '2020-09-20 08:38:54', '2020-09-29 06:04:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `smm_package_category`
+--
+
+CREATE TABLE `smm_package_category` (
+  `package_category_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `package_category_name` varchar(150) NOT NULL,
+  `package_category_descr` text NOT NULL,
+  `package_category_status` int(11) NOT NULL DEFAULT 1,
+  `package_category_addedby` int(11) DEFAULT 0,
+  `package_category_created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `package_category_updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `smm_package_category`
+--
+
+INSERT INTO `smm_package_category` (`package_category_id`, `company_id`, `package_category_name`, `package_category_descr`, `package_category_status`, `package_category_addedby`, `package_category_created_at`, `package_category_updated_at`) VALUES
+(1, 1, 'Category Demo 1', '', 1, 1, '2020-09-09 08:57:37', '2020-09-09 03:27:37'),
+(2, 1, 'Category Demo 2', '', 1, 1, '2020-09-09 08:57:43', '2020-09-09 03:27:43'),
+(3, 1, 'Category Demo 3', '', 0, 1, '2020-09-09 08:57:52', '2020-09-09 03:27:52');
 
 -- --------------------------------------------------------
 
@@ -7528,9 +7588,9 @@ CREATE TABLE `smm_package_feature` (
 --
 
 INSERT INTO `smm_package_feature` (`package_feature_id`, `company_id`, `package_id`, `package_feature_name`, `package_feature_descr`, `package_feature_image`, `package_feature_status`, `package_feature_addedby`, `package_feature_created_at`, `package_feature_updated_at`) VALUES
-(9, 0, 1, 'ghdfgh dfghdg', '', 'package_feature_1_1_1599393417.png', 1, 0, '2020-09-06 17:26:58', '2020-09-06 11:56:58'),
-(10, 0, 4, 'Demo', '', 'package_feature_4_1_1600571334.jpg', 1, 0, '2020-09-20 08:38:54', '2020-09-20 03:08:54'),
-(11, 0, 4, 'Demo 2', '', 'package_feature_4_2_1600571334.jpg', 1, 0, '2020-09-20 08:38:54', '2020-09-20 03:08:54');
+(10, 0, 4, 'Demo 66', '', 'package_feature_4_1_1600571334.jpg', 1, 1, '2020-09-20 08:38:54', '2020-09-29 06:14:14'),
+(11, 0, 4, 'Demo 77', '', 'package_feature_4_2_1600571334.jpg', 1, 1, '2020-09-20 08:38:54', '2020-09-29 06:14:14'),
+(12, 1, 1, 'Demo3', '', '', 1, 1, '2020-09-29 11:43:36', '2020-09-29 06:13:46');
 
 -- --------------------------------------------------------
 
@@ -7957,6 +8017,12 @@ CREATE TABLE `smm_reseller` (
   `reseller_lic2` varchar(100) NOT NULL,
   `reseller_op_crd_balance` double NOT NULL,
   `reseller_logo` varchar(350) NOT NULL,
+  `reseller_invoice_prefix` varchar(50) NOT NULL DEFAULT 'INV-',
+  `reseller_invoice_logo` varchar(250) NOT NULL,
+  `reseller_bank` varchar(250) NOT NULL,
+  `reseller_bank_branch` text NOT NULL,
+  `reseller_bank_acc_no` varchar(250) NOT NULL,
+  `reseller_bank_ifsc` varchar(150) NOT NULL,
   `reseller_status` int(11) NOT NULL DEFAULT 1,
   `reseller_addedby` int(11) DEFAULT 0,
   `reseller_added_type` int(11) NOT NULL DEFAULT 1 COMMENT '1 = Addedby Admin, 2= Reseller',
@@ -7970,10 +8036,10 @@ CREATE TABLE `smm_reseller` (
 -- Dumping data for table `smm_reseller`
 --
 
-INSERT INTO `smm_reseller` (`reseller_id`, `company_id`, `branch_id`, `reseller_name`, `reseller_address`, `country_id`, `state_id`, `district_id`, `city_id`, `reseller_pincode`, `reseller_statecode`, `reseller_mobile`, `reseller_password`, `reseller_mobile2`, `reseller_email`, `reseller_website`, `reseller_pan_no`, `reseller_gst_no`, `reseller_vat_no`, `reseller_cst_no`, `reseller_lic1`, `reseller_lic2`, `reseller_op_crd_balance`, `reseller_logo`, `reseller_status`, `reseller_addedby`, `reseller_added_type`, `reseller_is_online_request`, `reseller_approve`, `reseller_created_at`, `reseller_updated_at`) VALUES
-(2, 1, 0, 'Reseller 111', 'sdfgsdfg', 101, 22, NULL, 2652, '222333', '', '9876543210', '123456', '9966332211', 'fgdfg@dfg.jhkl', 'http://localhost/smm_reseller/', '444555', '111222', NULL, NULL, '', '', 5000, 'reseller_2_1599543094.png', 1, 1, 1, 0, 1, '2020-09-08 11:01:34', '2020-09-27 12:19:59'),
-(3, 1, 0, 'Reseller 222', 'sd dfg sdfgsg', 101, 22, NULL, 2652, '111444', '', '9966332211', '123456', '9966332211', 'fggf@ghj.kkk', 'http://localhost/smm_reseller/3', '222', '111', NULL, NULL, '', '', 10000, 'reseller_3_1600511162.png', 1, 2, 2, 0, 1, '2020-09-19 15:56:02', '2020-09-27 12:19:56'),
-(6, 1, 0, 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, NULL, 2652, '', '', '9876543211', '123456', '9966332211', 'demo@email.com', '', '5678', '5678', NULL, NULL, '', '', 0, 'http://localhost/smm_reseller/assets/images/reseller/reseller_6_1601173984.png', 1, 3, 2, 1, 0, '2020-09-27 08:01:48', '2020-09-27 02:33:04');
+INSERT INTO `smm_reseller` (`reseller_id`, `company_id`, `branch_id`, `reseller_name`, `reseller_address`, `country_id`, `state_id`, `district_id`, `city_id`, `reseller_pincode`, `reseller_statecode`, `reseller_mobile`, `reseller_password`, `reseller_mobile2`, `reseller_email`, `reseller_website`, `reseller_pan_no`, `reseller_gst_no`, `reseller_vat_no`, `reseller_cst_no`, `reseller_lic1`, `reseller_lic2`, `reseller_op_crd_balance`, `reseller_logo`, `reseller_invoice_prefix`, `reseller_invoice_logo`, `reseller_bank`, `reseller_bank_branch`, `reseller_bank_acc_no`, `reseller_bank_ifsc`, `reseller_status`, `reseller_addedby`, `reseller_added_type`, `reseller_is_online_request`, `reseller_approve`, `reseller_created_at`, `reseller_updated_at`) VALUES
+(2, 1, 0, 'Reseller 111', 'sdfgsdfg', 101, 22, NULL, 2652, '222333', '', '9876543210', '123456', '9966332211', 'fgdfg@dfg.jhkl', 'http://localhost/smm_reseller/', '444555', '111222', NULL, NULL, '', '', 5000, 'reseller_2_1599543094.png', 'INV-', '', '', '', '', '', 1, 1, 1, 0, 1, '2020-09-08 11:01:34', '2020-09-27 12:19:59'),
+(3, 1, 0, 'Reseller 222', 'sd dfg sdfgsg', 101, 22, NULL, 2652, '111444', '', '9966332211', '123456', '9966332211', 'fggf@ghj.kkk', 'http://localhost/smm_reseller/3', '222', '111', NULL, NULL, '', '', 10000, 'http://localhost/smm_reseller/assets/images/reseller/reseller_3_1601363908.jpg', 'Demo-', 'http://localhost/smm_reseller/assets/images/reseller/invoice_logo_3_1601362051.jpg', 'azsdsdfg', 'sdfgh', '34563456', '3456', 1, 0, 2, 0, 1, '2020-09-19 15:56:02', '2020-09-29 07:18:28'),
+(6, 1, 0, 'Reseller Level3', 'zsdfgsdfg sdfgsdfg', 101, 22, NULL, 2652, '', '', '9876543211', '123456', '9966332211', 'demo@email.com', '', '5678', '5678', NULL, NULL, '', '', 0, 'http://localhost/smm_reseller/assets/images/reseller/reseller_6_1601173984.png', 'INV-', '', '', '', '', '', 1, 3, 2, 1, 0, '2020-09-27 08:01:48', '2020-09-27 02:33:04');
 
 -- --------------------------------------------------------
 
@@ -10910,6 +10976,12 @@ ALTER TABLE `smm_bank_account`
   ADD PRIMARY KEY (`bank_account_id`);
 
 --
+-- Indexes for table `smm_blog`
+--
+ALTER TABLE `smm_blog`
+  ADD PRIMARY KEY (`blog_id`);
+
+--
 -- Indexes for table `smm_branch`
 --
 ALTER TABLE `smm_branch`
@@ -11150,6 +11222,12 @@ ALTER TABLE `smm_overtime_request`
 --
 ALTER TABLE `smm_package`
   ADD PRIMARY KEY (`package_id`);
+
+--
+-- Indexes for table `smm_package_category`
+--
+ALTER TABLE `smm_package_category`
+  ADD PRIMARY KEY (`package_category_id`);
 
 --
 -- Indexes for table `smm_package_feature`
@@ -11475,6 +11553,12 @@ ALTER TABLE `smm_bank_account`
   MODIFY `bank_account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `smm_blog`
+--
+ALTER TABLE `smm_blog`
+  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `smm_branch`
 --
 ALTER TABLE `smm_branch`
@@ -11496,7 +11580,7 @@ ALTER TABLE `smm_client`
 -- AUTO_INCREMENT for table `smm_commission`
 --
 ALTER TABLE `smm_commission`
-  MODIFY `commission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `commission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `smm_company_entity`
@@ -11622,7 +11706,7 @@ ALTER TABLE `smm_income_type`
 -- AUTO_INCREMENT for table `smm_invoice`
 --
 ALTER TABLE `smm_invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `smm_invoice_item`
@@ -11688,7 +11772,7 @@ ALTER TABLE `smm_office_shift`
 -- AUTO_INCREMENT for table `smm_order`
 --
 ALTER TABLE `smm_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `smm_order_item`
@@ -11715,10 +11799,16 @@ ALTER TABLE `smm_package`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `smm_package_category`
+--
+ALTER TABLE `smm_package_category`
+  MODIFY `package_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `smm_package_feature`
 --
 ALTER TABLE `smm_package_feature`
-  MODIFY `package_feature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `package_feature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `smm_payment_gateway`

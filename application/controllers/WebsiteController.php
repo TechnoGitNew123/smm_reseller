@@ -303,6 +303,7 @@ class WebsiteController extends CI_Controller{
     if(!$order_reseller_id || !$order_company_id || !$order_client_id){ header('location:'.base_url().''); }
 
     $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$order_client_id,'smm_reseller');
+    $reseller_info_seller = $this->Master_Model->get_info_arr('reseller_id',$order_reseller_id,'smm_reseller');
 
     $reseller_package_id = $this->session->userdata('buy_reseller_package_id');
     $reseller_package_info = $this->Master_Model->get_info_arr('reseller_package_id',$reseller_package_id,'smm_reseller_package');
@@ -357,6 +358,7 @@ class WebsiteController extends CI_Controller{
     $invoice_data = array(
       'invoice_date' => date('d-m-Y'),
       'invoice_no' => $invoice_no,
+      'invoice_no_prefix' => $reseller_info_seller[0]['reseller_invoice_prefix'],
       'client_id' => $order_client_id,
       'reseller_id' => $order_reseller_id,
       'company_id' => $order_company_id,
@@ -386,11 +388,15 @@ class WebsiteController extends CI_Controller{
     $cnt = 0;
     while($reseller_added_type == '2'){
       $client_reseller_id = $order_reseller_id;
-      $reseller_info = $this->Master_Model->get_info_arr_fields3('*', $order_company_id, 'reseller_id', $order_reseller_id, '', '', '', '', 'smm_reseller');
+      $reseller_info = $this->Master_Model->get_info_arr_fields3('*', $order_company_id, 'reseller_id', $client_reseller_id, '', '', '', '', 'smm_reseller');
 
       $order_reseller_id = $reseller_info[0]['reseller_addedby'];
       if($reseller_info[0]['reseller_added_type'] == 1){
         $order_reseller_id = '0';
+        $reseller_invoice_prefix = "INV-";
+      } else{
+        $reseller_info_seller = $this->Master_Model->get_info_arr_fields3('reseller_invoice_prefix', $order_company_id, 'reseller_id', $order_reseller_id, '', '', '', '', 'smm_reseller');
+        $reseller_invoice_prefix = $reseller_info_seller[0]['reseller_invoice_prefix'];
       }
 
       $reseller_package_info = $this->Master_Model->get_info_arr_fields3('reseller_package_prev_price, reseller_package_new_price, package_id, reseller_package_id', '', 'package_id', $package_id, 'reseller_id', $client_reseller_id, '', '', 'smm_reseller_package');
@@ -417,6 +423,7 @@ class WebsiteController extends CI_Controller{
       $invoice_data = array(
         'invoice_date' => date('d-m-Y'),
         'invoice_no' => $invoice_no,
+        'invoice_no_prefix' => $reseller_invoice_prefix,
         'client_id' => $client_reseller_id,
         'reseller_id' => $order_reseller_id,
         'company_id' => $order_company_id,

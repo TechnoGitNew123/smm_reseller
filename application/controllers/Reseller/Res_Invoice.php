@@ -26,7 +26,24 @@ class Res_Invoice extends CI_Controller{
     $this->load->view('Reseller/Include/footer', $data);
   }
 
+/********************************* Invoice To Customer ***********************************/
+  // Add Invoice...
+  public function invoice_to_cust_list(){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
 
+    // $data['invoice_no'] = $this->Master_Model->get_count_no($smm_res_company_id, 'invoice_no', 'smm_invoice');
+    // $data['reseller_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','reseller_name','ASC','smm_reseller');
+    // $data['project_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','project_name','ASC','smm_project');
+
+    $data['invoice_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','reseller_id',$smm_reseller_id,'','','invoice_id','DESC','smm_invoice');
+    $data['page'] = 'Invoice';
+    $this->load->view('Reseller/Include/head', $data);
+    $this->load->view('Reseller/Include/navbar', $data);
+    $this->load->view('Reseller/Res_Invoice/invoice_to_cust_list', $data);
+    $this->load->view('Reseller/Include/footer', $data);
+  }
 /***************************************** Order *****************************/
   // Order List....
   public function order_list(){
@@ -69,6 +86,60 @@ class Res_Invoice extends CI_Controller{
     $this->load->view('Reseller/Include/footer', $data);
   }
 
+
+
+/********************************* Invoice Setting *********************************/
+
+public function invoice_setting(){
+  $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+  $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+  if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+  $this->form_validation->set_rules('reseller_invoice_prefix', 'Invoice Name', 'trim|required');
+  if ($this->form_validation->run() != FALSE) {
+    $update_data = $_POST;
+    unset($update_data['old_reseller_invoice_logo']);
+    $this->Master_Model->update_info('reseller_id', $smm_reseller_id, 'smm_reseller', $update_data);
+
+    if($_FILES['reseller_invoice_logo']['name']){
+      $time = time();
+      $image_name = 'invoice_logo_'.$smm_reseller_id.'_'.$time;
+      $config['upload_path'] = 'assets/images/reseller/';
+      $config['allowed_types'] = 'jpg|jpeg|png|gif';
+      $config['file_name'] = $image_name;
+      $filename = $_FILES['reseller_invoice_logo']['name'];
+      $ext = pathinfo($filename, PATHINFO_EXTENSION);
+      $this->upload->initialize($config); // if upload library autoloaded
+      if ($this->upload->do_upload('reseller_invoice_logo') && $smm_reseller_id && $image_name && $ext && $filename){
+        $reseller_invoice_logo_up['reseller_invoice_logo'] =  base_url().'assets/images/reseller/'.$image_name.'.'.$ext;
+        $this->Master_Model->update_info('reseller_id', $smm_reseller_id, 'smm_reseller', $reseller_invoice_logo_up);
+        if($_POST['old_reseller_invoice_logo']){
+          $unlink_img = str_replace(base_url(), "",$_POST['old_reseller_invoice_logo']);
+          unlink($unlink_img);
+        }
+        $this->session->set_flashdata('upload_success','File Uploaded Successfully');
+      }
+      else{
+        $error = $this->upload->display_errors();
+        $this->session->set_flashdata('upload_error',$error);
+      }
+    }
+    echo $_POST['old_reseller_invoice_logo'];
+
+    $this->session->set_flashdata('update_success','success');
+    header('location:'.base_url().'Reseller/Res_Invoice/invoice_setting');
+  }
+  $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$smm_reseller_id,'smm_reseller');
+  if(!$reseller_info){ header('location:'.base_url().''); }
+  $data['invoice_setting_info'] = $reseller_info[0];
+  $data['update'] = 'update';
+
+  $data['page'] = 'Invoice Setting';
+  $this->load->view('Reseller/Include/head', $data);
+  $this->load->view('Reseller/Include/navbar', $data);
+  $this->load->view('Reseller/Res_Invoice/invoice_setting', $data);
+  $this->load->view('Reseller/Include/footer', $data);
+}
 /********************************* Invoice to Customer ***********************************/
   // Add Invoice...
   public function invoice(){

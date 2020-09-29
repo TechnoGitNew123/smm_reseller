@@ -56,7 +56,7 @@
                         <td><?php echo $list->invoice_gst_amt; ?></td>
                         <td><?php echo $list->invoice_net_amt; ?></td>
                         <td class="wt_50">
-                          <?php if($list->invoice_addedby_type == 3){ echo '<span class="text-success"><b>My Order</b></span>'; }
+                          <?php if($list->invoice_addedby_type == 3){ echo '<span class="text-success"><b>Own Order</b></span>'; }
                             elseif($list->invoice_addedby_type == 4){ echo '<span class="text-danger"><b>Level Invoice</b></span>'; } ?>
                         </td>
                       </tr>

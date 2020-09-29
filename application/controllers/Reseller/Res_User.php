@@ -89,21 +89,24 @@ class Res_User extends CI_Controller{
       unset($update_data['old_reseller_logo']);
       // $update_data['reseller_status'] = $reseller_status;
       $update_data['reseller_addedby'] = '0';
-      $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $update_data);
+      $this->Master_Model->update_info('reseller_id', $smm_reseller_id, 'smm_reseller', $update_data);
 
       if($_FILES['reseller_logo']['name']){
         $time = time();
-        $image_name = 'reseller_'.$reseller_id.'_'.$time;
+        $image_name = 'reseller_'.$smm_reseller_id.'_'.$time;
         $config['upload_path'] = 'assets/images/reseller/';
         $config['allowed_types'] = 'jpg|jpeg|png|gif';
         $config['file_name'] = $image_name;
         $filename = $_FILES['reseller_logo']['name'];
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
-        if ($this->upload->do_upload('reseller_logo') && $reseller_id && $image_name && $ext && $filename){
+        if ($this->upload->do_upload('reseller_logo') && $smm_reseller_id && $image_name && $ext && $filename){
           $reseller_logo_up['reseller_logo'] =  base_url().'assets/images/reseller/'.$image_name.'.'.$ext;
-          $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $reseller_logo_up);
-          if($_POST['old_reseller_logo']){ unlink("".$_POST['old_reseller_logo']); }
+          $this->Master_Model->update_info('reseller_id', $smm_reseller_id, 'smm_reseller', $reseller_logo_up);
+          if($_POST['old_reseller_logo']){
+            $unlink_image = str_replace(base_url(), "",$_POST['old_reseller_logo']);
+            unlink($unlink_image);
+          }
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
         else{

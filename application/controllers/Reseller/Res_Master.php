@@ -395,6 +395,130 @@ class Res_Master extends CI_Controller{
   }
 
 
+/*********************************** Blog *********************************/
+
+  // Add Blog....
+  public function blog(){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+    $this->form_validation->set_rules('blog_name', 'Blog Name', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      $blog_status = $this->input->post('blog_status');
+      if(!isset($blog_status)){ $blog_status = '1'; }
+      $save_data = $_POST;
+      $save_data['blog_status'] = $blog_status;
+      $save_data['company_id'] = $smm_res_company_id;
+      $save_data['blog_addedby_type'] = '2';
+      $save_data['blog_addedby'] = $smm_reseller_id;
+      $blog_id = $this->Master_Model->save_data('smm_blog', $save_data);
+
+      if($_FILES['blog_image']['name']){
+        $time = time();
+        $image_name = 'blog_'.$blog_id.'_'.$time;
+        $config['upload_path'] = 'assets/images/blog/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['file_name'] = $image_name;
+        $filename = $_FILES['blog_image']['name'];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $this->upload->initialize($config); // if upload library autoloaded
+        if ($this->upload->do_upload('blog_image') && $blog_id && $image_name && $ext && $filename){
+          $blog_image_up['blog_image'] =  $image_name.'.'.$ext;
+          $this->Master_Model->update_info('blog_id', $blog_id, 'smm_blog', $blog_image_up);
+          $this->session->set_flashdata('upload_success','File Uploaded Successfully');
+        }
+        else{
+          $error = $this->upload->display_errors();
+          $this->session->set_flashdata('upload_error',$error);
+        }
+      }
+      $this->session->set_flashdata('save_success','success');
+      header('location:'.base_url().'Reseller/Res_Master/blog');
+    }
+
+    $data['blog_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'blog_addedby_type','2','blog_addedby',$smm_reseller_id,'','','blog_id','DESC','smm_blog');
+    $data['page'] = 'Blog';
+    $this->load->view('Reseller/Include/head', $data);
+    $this->load->view('Reseller/Include/navbar', $data);
+    $this->load->view('Reseller/Res_Master/blog', $data);
+    $this->load->view('Reseller/Include/footer', $data);
+  }
+
+  // Edit/Update Blog...
+  public function edit_blog($blog_id){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+    $this->form_validation->set_rules('blog_name', 'Blog Name', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      $blog_status = $this->input->post('blog_status');
+      if(!isset($blog_status)){ $blog_status = '1'; }
+      $update_data = $_POST;
+      unset($update_data['old_blog_img']);
+      $update_data['blog_status'] = $blog_status;
+      $save_data['blog_addedby_type'] = '2';
+      $this->Master_Model->update_info('blog_id', $blog_id, 'smm_blog', $update_data);
+
+      if($_FILES['blog_image']['name']){
+        $time = time();
+        $image_name = 'blog_'.$blog_id.'_'.$time;
+        $config['upload_path'] = 'assets/images/blog/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['file_name'] = $image_name;
+        $filename = $_FILES['blog_image']['name'];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $this->upload->initialize($config); // if upload library autoloaded
+        if ($this->upload->do_upload('blog_image') && $blog_id && $image_name && $ext && $filename){
+          $blog_image_up['blog_image'] =  $image_name.'.'.$ext;
+          $this->Master_Model->update_info('blog_id', $blog_id, 'smm_blog', $blog_image_up);
+          if($_POST['old_blog_img']){ unlink("assets/images/blog/".$_POST['old_blog_img']); }
+          $this->session->set_flashdata('upload_success','File Uploaded Successfully');
+        }
+        else{
+          $error = $this->upload->display_errors();
+          $this->session->set_flashdata('upload_error',$error);
+        }
+      }
+
+      $this->session->set_flashdata('update_success','success');
+      header('location:'.base_url().'Reseller/Res_Master/blog');
+    }
+
+    $blog_info = $this->Master_Model->get_info_arr('blog_id',$blog_id,'smm_blog');
+    if(!$blog_info){ header('location:'.base_url().'Reseller/Res_Master/blog'); }
+    $data['update'] = 'update';
+    $data['update_blog'] = 'update';
+    $data['blog_info'] = $blog_info[0];
+    $data['act_link'] = base_url().'Reseller/Res_Master/edit_blog/'.$blog_id;
+
+    $data['blog_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'blog_addedby_type','2','blog_addedby',$smm_reseller_id,'','','blog_id','DESC','smm_blog');
+    $data['page'] = 'Edit Blog';
+    $this->load->view('Reseller/Include/head', $data);
+    $this->load->view('Reseller/Include/navbar', $data);
+    $this->load->view('Reseller/Res_Master/blog', $data);
+    $this->load->view('Reseller/Include/footer', $data);
+  }
+
+  //Delete Blog...
+  public function delete_blog($blog_id){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+    $blog_info = $this->Master_Model->get_info_arr_fields('blog_image, blog_id', 'blog_id', $blog_id, 'smm_blog');
+    if($blog_info){
+      $blog_image = $blog_info[0]['blog_image'];
+      if($blog_image){ unlink("assets/images/blog/".$blog_image); }
+    }
+    $this->Master_Model->delete_info('blog_id', $blog_id, 'smm_blog');
+    $this->session->set_flashdata('delete_success','success');
+    header('location:'.base_url().'Reseller/Res_Master/blog');
+  }
+
+
 /************************************* Web Setting **************************************/
   public function web_setting(){
     $smm_reseller_id = $this->session->userdata('smm_reseller_id');

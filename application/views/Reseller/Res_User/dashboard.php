@@ -27,7 +27,7 @@
           <div class="col-md-3 col-6">
             <a href="<?php echo base_url(); ?>Reseller/Res_Master/reseller">
               <div class="info-box">
-                <span class="info-box-icon text-success"><i class="far fa-user"></i></span>
+                <span class="info-box-icon text-info"><i class="far fa-user"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text text-secondary">Reseller</span>
                   <span class="info-box-number text-primary f-18"><?php echo $reseller_cnt; ?></span>
@@ -38,10 +38,87 @@
           <div class="col-md-3 col-6">
             <a href="<?php echo base_url(); ?>Reseller/Res_Package/my_package_list">
               <div class="info-box">
-                <span class="info-box-icon text-info"><i class="far fa-money-bill-alt"></i></span>
+                <span class="info-box-icon text-success"><i class="fas fa-box"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text text-secondary">My Packages</span>
                   <span class="info-box-number text-primary f-18"><?php echo $package_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Package/reseller_coupon">
+              <div class="info-box">
+                <span class="info-box-icon text-primary"><i class="fas fa-tags"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Coupon</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $coupon_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Invoice/order_list">
+              <div class="info-box">
+                <span class="info-box-icon text-danger"><i class="fas fa-list"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Order</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $order_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Invoice/invoice_list">
+              <div class="info-box">
+                <span class="info-box-icon text-info"><i class="far fa-money-bill-alt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Invoice (By Admin)</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $admin_invoice_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Invoice/invoice_to_cust_list">
+              <div class="info-box">
+                <span class="info-box-icon text-success"><i class="far fa-money-bill-alt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Invoice (To Customer)</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $customer_invoice_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Project/project">
+              <div class="info-box">
+                <span class="info-box-icon text-primary"><i class="fas fa-cog"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Project</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $project_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Project/task">
+              <div class="info-box">
+                <span class="info-box-icon text-danger"><i class="fas fa-tasks"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Task</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $task_cnt; ?></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-6">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Project/ticket">
+              <div class="info-box">
+                <span class="info-box-icon text-info"><i class="fas fa-ticket-alt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Ticket</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $ticket_cnt; ?></span>
                 </div>
               </div>
             </a>
@@ -58,7 +135,7 @@
             </a>
           </div>
           <div class="col-md-3 col-6">
-            <a href="<?php echo base_url(); ?>Reseller/Res_Master/announcement">
+            <a href="<?php echo base_url(); ?>Reseller/Res_Master/testimonial">
               <div class="info-box">
                 <span class="info-box-icon text-danger"><i class="fas fa-comment-dots"></i></span>
                 <div class="info-box-content">
@@ -68,62 +145,16 @@
               </div>
             </a>
           </div>
-
-
           <div class="col-md-3 col-6">
-            <div class="info-box">
-              <span class="info-box-icon text-success"><i class="far fa-calendar-alt"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text text-secondary">Completed Project</span>
-                <span class="info-box-number text-primary f-18">10</span>
+            <a href="<?php echo base_url(); ?>Reseller/Res_Master/blog">
+              <div class="info-box">
+                <span class="info-box-icon text-danger"><i class="fas fa-blog"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text text-secondary">Blog</span>
+                  <span class="info-box-number text-primary f-18"><?php echo $blog_cnt; ?></span>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="info-box">
-              <span class="info-box-icon text-warning"><i class="fas fa-calculator"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text text-secondary">In Progress Project</span>
-                <span class="info-box-number text-primary f-18">10</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="info-box">
-              <span class="info-box-icon text-danger"><i class="far fa-calendar-alt"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text text-secondary">Not Started Project</span>
-                <span class="info-box-number text-primary f-18">10</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="info-box">
-              <span class="info-box-icon text-info"><i class="fas fa-calculator"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text text-secondary">Deferred Project</span>
-                <span class="info-box-number text-primary f-18">10</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-6">
-            <div class="info-box">
-              <span class="info-box-icon text-success"><i class="far fa-user"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text text-secondary">Paid Amount</span>
-                <span class="info-box-number text-primary f-18">10</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="info-box">
-              <span class="info-box-icon text-info"><i class="far fa-money-bill-alt"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text text-secondary">Due Amount</span>
-                <span class="info-box-number text-primary f-18">10</span>
-              </div>
-            </div>
+            </a>
           </div>
 
         </div>
@@ -136,32 +167,37 @@
               <div class="card-header">
                 <h3 class="card-title">My Projects</h3>
               </div>
-              <div class="card-body p-0">
-                <table class="table table-condensed">
+              <div class="card-body p-2">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                    <tr>
-                      <th>Project Summary</th>
-                      <th>Priority</th>
-                      <th>End Date</th>
-                      <th>Progress</th>
-                    </tr>
+                  <tr>
+                    <th class="d-none">#</th>
+                    <th class="wt_50">Order No</th>
+                    <th>Client</th>
+                    <!-- <th >Date</th> -->
+                    <th>Package Name</th>
+                    <th >Amount</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($project_list as $list) { ?>
+                    <?php if(isset($order_list)){
+                    $i=0; foreach ($order_list as $list) { $i++;
+                      $reseller_info = $this->Master_Model->get_info_arr_fields3('reseller_name', '', 'reseller_id', $list->client_id, '', '', '', '', 'smm_reseller');
+                    ?>
                       <tr>
-                        <td><?php echo $list->project_name; ?></td>
-                        <td>
-                          <span class="badge bg-success"><?php echo $list->project_piority; ?></span>
-                        </td>
-                        <td><?php echo $list->project_end_date; ?></td>
-                        <td>
-                          <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-danger" style="width: <?php echo $list->project_progress; ?>%"></div>
+                        <td class="d-none"><?php echo $i; ?></td>
+                        <!-- <td class="text-center">
+                          <div class="btn-group">
+                            <a href="<?php echo base_url() ?>Reseller/Res_Order/view_order/<?php echo $list->order_id; ?>" type="button" class="btn btn-sm btn-default"><i class="fa fa-eye text-success"></i></a>
                           </div>
-                        </td>
+                        </td> -->
+                        <td>ORD-00<?php echo $list->order_no; ?></td>
+                        <td><?php if($reseller_info){ echo $reseller_info[0]['reseller_name']; } ?></td>
+                        <!-- <td><?php echo $list->order_date; ?></td> -->
+                        <td><?php echo $list->package_name; ?></td>
+                        <td><?php echo $list->order_net_amount; ?></td>
                       </tr>
-                    <?php } ?>
-                    <!--  -->
+                    <?php } } ?>
                   </tbody>
                 </table>
                 <!-- <button type="button" class="btn btn-block btn-primary btn-xs w-25 my-3 ml-2">My Projects</button> -->
@@ -171,32 +207,48 @@
           <div class="col-md-6">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List All Invoices</h3>
+                <h3 class="card-title">Customer Invoices</h3>
               </div>
-              <div class="card-body p-0">
-                <table class="table table-condensed">
+              <div class="card-body p-2">
+                <table id="example2" class="table table-bordered table-striped">
                   <thead>
-                    <tr>
-                      <th>Invoice#</th>
-                      <th>Project</th>
-                      <th>Total</th>
-                      <th>Invoice Date</th>
-                      <th>Due Date</th>
-                      <th>Status</th>
-                    </tr>
+                  <tr>
+                    <th class="d-none">#</th>
+                    <th class="wt_50">Invoice No</th>
+                    <th class="">Package</th>
+                    <th >Date</th>
+                    <!-- <th >Basic Amt</th> -->
+                    <!-- <th >GST Amt</th> -->
+                    <th >Total</th>
+                    <!-- <th class="wt_50">Type</th> -->
+                    <!-- <th class="wt_50">Status</th> -->
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Update software</td>
-                      <td>25000</td>
-                      <td>10-09-2020</td>
-                      <td>19-10-2020</td>
-                      <td><span class="badge bg-success">High</span></td>
-                    </tr>
+                    <?php if(isset($invoice_list)){
+                    $i=0; foreach ($invoice_list as $list) { $i++;
+                      // $reseller_info = $this->Master_Model->get_info_arr_fields3('reseller_name', '', 'reseller_id', $list->reseller_id, '', '', '', '', 'smm_reseller');
+                      // $project_info = $this->Master_Model->get_info_arr_fields3('project_name', '', 'project_id', $list->project_id, '', '', '', '', 'smm_project');
+                    ?>
+                      <tr>
+                        <td class="d-none"><?php echo $i; ?></td>
+                        <td><?php echo $list->invoice_no_prefix.''.$list->invoice_no; ?></td>
+                        <!-- <td><?php if($reseller_info){ echo $reseller_info[0]['reseller_name']; } ?></td> -->
+                        <!-- <td><?php if($project_info){ echo $project_info[0]['project_name']; } ?></td> -->
+                        <td><?php echo $list->package_name; ?></td>
+                        <td><?php echo $list->invoice_date; ?></td>
+                        <!-- <td><?php echo $list->invoice_basic_amt; ?></td> -->
+                        <!-- <td><?php echo $list->invoice_gst_amt; ?></td> -->
+                        <td><?php echo $list->invoice_net_amt; ?></td>
+                        <!-- <td class="wt_50">
+                          <?php if($list->invoice_addedby_type == 3){ echo '<span class="text-success"><b>Own Order</b></span>'; }
+                            elseif($list->invoice_addedby_type == 4){ echo '<span class="text-danger"><b>Level Invoice</b></span>'; } ?>
+                        </td> -->
+                      </tr>
+                    <?php } } ?>
                   </tbody>
                 </table>
-                <button type="button" class="btn btn-block btn-primary btn-xs w-25 my-3 ml-2">All Invoices</button>
+                <!-- <button type="button" class="btn btn-block btn-primary btn-xs w-25 my-3 ml-2">All Invoices</button> -->
               </div>
             </div>
           </div>

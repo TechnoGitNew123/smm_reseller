@@ -36,7 +36,7 @@
 
 <div class="login-new" style="width:600px;">
   <div class="login-logo ">
-    <span class="login-box-msg"> <img width="150px;" src="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info[0]['web_setting_logo']; ?>"> </span>
+    <span class="login-box-msg"> <img width="150px;" src="<?php echo $web_setting_info[0]['web_setting_logo']; ?>"> </span>
     <!-- <br><i class="fas fa-hospital-alt"></i> -->
   </div>
   <!-- /.login-logo -->

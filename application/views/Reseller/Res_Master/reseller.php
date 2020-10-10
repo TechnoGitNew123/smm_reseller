@@ -18,7 +18,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12">
+          <!-- <div class="col-md-12">
             <div class="card <?php if(!isset($update)){ echo 'collapsed-card'; } ?> card-default">
               <div class="card-header">
                 <h3 class="card-title"> <?php if(isset($update)){ echo 'Update'; } else{ echo 'Add New'; } ?> Reseller</h3>
@@ -33,15 +33,6 @@
               <div class="card-body p-0" <?php if(isset($update)){ echo 'style="display: block;"'; } else{ echo 'style="display: none;"'; } ?>>
                 <form class="input_form m-0" id="form_action" role="form" action="" method="post" enctype="multipart/form-data">
                   <div class="row p-4">
-                    <!-- <div class="form-group col-md-6 select_sm">
-                      <label>Branch</label>
-                      <select class="form-control select2" name="branch_id" id="branch_id" data-placeholder="Select Branch" required>
-                        <option value="">Select Branch</option>
-                        <?php if(isset($branch_list)){ foreach ($branch_list as $list) { ?>
-                        <option value="<?php echo $list->branch_id; ?>" <?php if(isset($reseller_info) && $reseller_info['branch_id'] == $list->branch_id){ echo 'selected'; } if($list->branch_status == 0){ echo ''; } ?>><?php echo $list->branch_name; ?></option>
-                        <?php } } ?>
-                      </select>
-                    </div> -->
                     <div class="form-group col-md-12">
                       <label>Name of Reseller/Company</label>
                       <input type="text" class="form-control form-control-sm" name="reseller_name" id="reseller_name" value="<?php if(isset($reseller_info)){ echo $reseller_info['reseller_name']; } ?>"  placeholder="Enter Name of Reseller/Company" required>
@@ -155,7 +146,7 @@
                 </form>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-md-12">
             <div class="card">
@@ -166,13 +157,14 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th class="d-none">#</th>
-                    <th class="wt_50">Action</th>
+                    <th class="wt_50">#</th>
+                    <!-- <th class="wt_50">Action</th> -->
                     <th>Reseller Name</th>
                     <th class="wt_75">Mobile No.</th>
                     <th class="wt_125">Email</th>
                     <th class="wt_100">City</th>
-                    <th class="wt_50">Image</th>
+                    <th class="wt_50">Joining Date</th>
+                    <!-- <th class="wt_50">Image</th> -->
                     <th class="wt_50">Status</th>
                   </tr>
                   </thead>
@@ -182,18 +174,19 @@
                         $city_info = $this->Master_Model->get_info_arr_fields3('city_name', '', 'city_id', $list->city_id, '', '', '', '', 'city');
                     ?>
                       <tr>
-                        <td class="d-none"><?php echo $i; ?></td>
-                        <td class="text-center">
+                        <td class=""><?php echo $i; ?></td>
+                        <!-- <td class="text-center">
                           <div class="btn-group">
                             <a href="<?php echo base_url() ?>Reseller/Res_Master/edit_reseller/<?php echo $list->reseller_id; ?>" type="button" class="btn btn-sm btn-default"><i class="fa fa-edit text-primary"></i></a>
-                            <!-- <a href="<?php echo base_url() ?>Reseller/Res_Master/delete_reseller/<?php echo $list->reseller_id; ?>" type="button" class="btn btn-sm btn-default" onclick="return confirm('Delete this Reseller');"><i class="fa fa-trash text-danger"></i></a> -->
+                            <a href="<?php echo base_url() ?>Reseller/Res_Master/delete_reseller/<?php echo $list->reseller_id; ?>" type="button" class="btn btn-sm btn-default" onclick="return confirm('Delete this Reseller');"><i class="fa fa-trash text-danger"></i></a>
                           </div>
-                        </td>
+                        </td> -->
                         <td><?php echo $list->reseller_name; ?></td>
                         <td><?php echo $list->reseller_mobile; ?></td>
                         <td><?php echo $list->reseller_email; ?></td>
                         <td><?php if($city_info){ echo $city_info[0]['city_name']; } ?></td>
-                        <td><img width="50px" src="<?php echo base_url() ?>assets/images/reseller/<?php echo $list->reseller_logo;  ?>" alt="Group Image">
+                        <td><?php echo date('d-m-Y',strtotime($list->reseller_created_at)); ?></td>
+                        <!-- <td><img width="50px" src="<?php echo base_url() ?>assets/images/reseller/<?php echo $list->reseller_logo;  ?>" alt="Group Image"> -->
                         <td>
                           <?php if($list->reseller_status == 0){ echo '<span class="text-danger">Inactive</span>'; }
                             else{ echo '<span class="text-success">Active</span>'; } ?>

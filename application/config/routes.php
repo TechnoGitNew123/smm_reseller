@@ -55,12 +55,15 @@ $route['Login'] = 'WebsiteController/login';
 $route['Signup'] = 'WebsiteController/signup';
 $route['Logout'] = 'WebsiteController/logout';
 $route['Profile-Add'] = 'WebsiteController/profile_add';
-
+$route['Blog-List'] = 'WebsiteController/blog_list';
+$route['Blog-Details/(:any)'] = 'WebsiteController/blog_details/$1';
 
 $route['Cart'] = 'WebsiteController/cart';
 $route['Payment'] = 'WebsiteController/payment';
 // $route['Payment-Details'] = 'WebsiteController/payment_details';
 $route['Payment-Success'] = 'WebsiteController/payment_success_msg';
+
+$route['Reseller'] = 'Reseller/Res_User';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

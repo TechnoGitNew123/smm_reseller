@@ -10,7 +10,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info[0]['web_setting_favicon']; ?>"/>
+    <link rel="icon" type="image/png" href="<?php echo $web_setting_info[0]['web_setting_favicon']; ?>"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <?php if($web_template_id == 1){ ?>
@@ -40,7 +40,7 @@
 
 
       <nav class="navbar navbar-expand-lg navbar-light top_navbar w-100">
-        <a class="navbar-brand" href="#"> <img src="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info[0]['web_setting_logo']; ?>"> </a>
+        <a class="navbar-brand" href="#"> <img src="<?php echo $web_setting_info[0]['web_setting_logo']; ?>"> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -49,13 +49,14 @@
             <a class="nav-item nav-link active" href="<?php echo base_url(); ?>">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="#">What We Offer!</a>
             <a class="nav-item nav-link" href="#">Services</a>
-            <a class="nav-item nav-link" href="#">Blog</a>
+            <a class="nav-item nav-link" href="<?php echo base_url(); ?>Blog-List">Blog</a>
             <?php if($smm_reseller_id && $smm_res_company_id){ ?>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <?php echo $cust_reseller_info[0]['reseller_name']; ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>Reseller/Res_User">Reseller Pannel</a>
                   <a class="dropdown-item" href="<?php echo base_url(); ?>Logout">Logout</a>
                 </div>
               </li>

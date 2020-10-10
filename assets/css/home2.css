@@ -235,18 +235,18 @@ h1, h2, h3, h4{
 }
 
 .blog-date p{
-	margin-bottom: 5px!important;
+	margin-bottom: 0px!important;
 }
 
 .blog .card-body .blog-name {
-	position: absolute;
-	width: 140px;
-	height: 35px;
-	top: 130px;
-	left: 30%;
-	z-index: 9;
-	background-color: #044c9d;
-	color: #fff;
+    position: relative;
+    width: 140px;
+    height: 35px;
+    top: -37px;
+    left: 30%;
+    z-index: 9;
+    background-color: #044c9d;
+    color: #fff;
 }
 .blog h5{
 	padding-top: 20px;

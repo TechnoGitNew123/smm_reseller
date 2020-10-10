@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
        <div class="col-md-3">
-         <img class="bg-grey footer-menu" src="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info[0]['web_setting_logo']; ?>" >
+         <img class="bg-grey footer-menu" src="<?php echo $web_setting_info[0]['web_setting_logo']; ?>" >
          <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid</p>
          <p>Call : <?php echo $web_setting_info[0]['web_setting_mobile']; ?></p>
          <p>email : <?php echo $web_setting_info[0]['web_setting_email']; ?></p>

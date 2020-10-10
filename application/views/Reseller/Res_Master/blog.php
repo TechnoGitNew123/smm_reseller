@@ -57,7 +57,7 @@
                       </div>
                       <div class="form-group col-md-4">
                         <?php if(isset($blog_info) && $blog_info['blog_image']){ ?>
-                          <img width="150px" src="<?php echo base_url() ?>assets/images/blog/<?php echo $blog_info['blog_image'];  ?>" alt="Blog Image">
+                          <img width="150px" src="<?php echo $blog_info['blog_image'];  ?>" alt="Blog Image">
                           <input type="hidden" name="old_blog_img" value="<?php echo $blog_info['blog_image']; ?>">
                         <?php } ?>
                       </div>
@@ -115,7 +115,7 @@
                         </div>
                       </td>
                       <td><?php echo $list->blog_name; ?></td>
-                      <td class="text-center"><img width="50px" width="50px" src="<?php echo base_url() ?>assets/images/blog/<?php echo $list->blog_image;  ?>" alt="Blog Image">
+                      <td class="text-center"><img width="50px" width="50px" src="<?php echo $list->blog_image;  ?>" alt="Blog Image">
                       <td>
                         <?php if($list->blog_status == 0){ echo '<span class="text-danger">Inactive</span>'; }
                           else{ echo '<span class="text-success">Active</span>'; } ?>

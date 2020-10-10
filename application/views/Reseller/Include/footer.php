@@ -91,6 +91,11 @@
       toastr.error('File Not Uploaded');
     });
   <?php } ?>
+  <?php if($this->session->flashdata('save_error')){ ?>
+    $(document).ready(function(){
+      toastr.error('Information Not Saved');
+    });
+  <?php } ?>
 </script>
 
 

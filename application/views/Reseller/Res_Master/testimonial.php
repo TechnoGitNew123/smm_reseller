@@ -26,7 +26,7 @@
                   <?php if(!isset($update)){
                     echo '<button type="button" class="btn btn-sm btn-primary" data-card-widget="collapse">Add New</button>';
                   } else{
-                    echo '<a href="'.base_url().'Master/testimonial" type="button" class="btn btn-sm btn-outline-info" >Cancel Edit</a>';
+                    echo '<a href="'.base_url().'Reseller/Res_Master/testimonial" type="button" class="btn btn-sm btn-outline-info" >Cancel Edit</a>';
                   } ?>
                 </div>
               </div>
@@ -65,7 +65,7 @@
                       </div>
                       <div class="form-group col-md-4">
                         <?php if(isset($testimonial_info) && $testimonial_info['testimonial_image']){ ?>
-                          <img width="150px" src="<?php echo base_url() ?>assets/images/testimonial/<?php echo $testimonial_info['testimonial_image'];  ?>" alt="Slider Image">
+                          <img width="150px" src="<?php echo $testimonial_info['testimonial_image'];  ?>" alt="Slider Image">
                           <input type="hidden" name="old_testimonial_img" value="<?php echo $testimonial_info['testimonial_image']; ?>">
                         <?php } ?>
                       </div>
@@ -120,14 +120,14 @@
                       <td class="d-none"><?php echo $i; ?></td>
                       <td class="text-center">
                         <div class="btn-group">
-                          <a href="<?php echo base_url() ?>Master/edit_testimonial/<?php echo $list->testimonial_id; ?>" type="button" class="btn btn-sm btn-default"><i class="fa fa-edit text-primary"></i></a>
-                          <a href="<?php echo base_url() ?>Master/delete_testimonial/<?php echo $list->testimonial_id; ?>" type="button" class="btn btn-sm btn-default" onclick="return confirm('Delete this Testimonial Information');"><i class="fa fa-trash text-danger"></i></a>
+                          <a href="<?php echo base_url() ?>Reseller/Res_Master/edit_testimonial/<?php echo $list->testimonial_id; ?>" type="button" class="btn btn-sm btn-default"><i class="fa fa-edit text-primary"></i></a>
+                          <a href="<?php echo base_url() ?>Reseller/Res_Master/delete_testimonial/<?php echo $list->testimonial_id; ?>" type="button" class="btn btn-sm btn-default" onclick="return confirm('Delete this Testimonial Information');"><i class="fa fa-trash text-danger"></i></a>
                         </div>
                       </td>
                       <td><?php echo $list->testimonial_name; ?></td>
                       <td><?php echo $list->testimonial_date; ?></td>
                       <td><?php echo $list->testimonial_person; ?></td>
-                      <td class="text-center"><img height="50px" width="50px" src="<?php echo base_url() ?>assets/images/testimonial/<?php echo $list->testimonial_image;  ?>" alt="Testimonial Image">
+                      <td class="text-center"><img height="50px" width="50px" src="<?php echo $list->testimonial_image;  ?>" alt="Testimonial Image">
                       <td>
                         <?php if($list->testimonial_status == 0){ echo '<span class="text-danger">Inactive</span>'; }
                           else{ echo '<span class="text-success">Active</span>'; } ?>

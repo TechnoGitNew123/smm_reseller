@@ -45,12 +45,12 @@
                     <span class="f-16">Validity</span>
                   </div>
                 </div>
-                <div class="col-4 border-right">
+                <!-- <div class="col-4 border-right">
                   <div class="description-block ">
                     <h5 class="description-header"><b>Rs. <?php if($smm_addedby_type == 1){ echo $package_details['package_cost']; } else{ echo $package_details['reseller_package_new_price']; } ?></b></h5>
                     <span class="f-16">Price</span>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-4">
                   <div class="description-block ">
                     <h5 class="description-header"><b><?php echo $package_details['package_revisions']; ?></b></h5>
@@ -58,9 +58,23 @@
                   </div>
                 </div>
               </div>
+
+              <hr>
+              <h4 class="mb-3">Package Features</h4>
+              <?php foreach ($package_feature_list as $package_feature_list2) { ?>
+                <!-- <div class="col-md-4"> -->
+                  <!-- <div class="card p-2"> -->
+                    <!-- <img src="<?php echo admin_url ?>assets/images/package/<?php echo $package_feature_list2->package_feature_image;  ?>" class="product-image" alt="Product Image"> -->
+                    <p class="mb-2"> <i class="fa fa-check"></i> <?php echo $package_feature_list2->package_feature_name;  ?></p>
+                  <!-- </div> -->
+                <!-- </div> -->
+              <?php } ?>
+
+
             </div>
           </div>
           <div class="row mt-4">
+            <!-- <h4>Package Features</h4>
             <?php foreach ($package_feature_list as $package_feature_list2) { ?>
               <div class="col-md-4">
                 <div class="card p-2">
@@ -68,7 +82,7 @@
                   <p><?php echo $package_feature_list2->package_feature_name;  ?></p>
                 </div>
               </div>
-            <?php } ?>
+            <?php } ?> -->
 
 
           </div>

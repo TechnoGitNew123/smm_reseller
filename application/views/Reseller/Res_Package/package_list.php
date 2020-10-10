@@ -38,71 +38,76 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <?php if(isset($package_list)){
-            $i=0; foreach ($package_list as $list) { $i++;
-          ?>
+
+        <div class="col-md-12">
+          <!-- <div class="card"> -->
+            <!-- <div class="card-header">
+              <h3 class="card-title">List All Package</h3>
+            </div> -->
+            <!-- <div class="card-body p-2"> -->
+
+              <?php if($package_category_list){
+                foreach ($package_category_list as $package_category_list1) { ?>
+                  <div class="card p-2">
+                  <h4 class="text-center pb-2 mt-3"> <i class="fas fa-box-open mr-2"></i> <?php echo $package_category_list1->package_category_name; ?></h4>
 
 
-          <div class="col-md-4">
-            <div class="card card-widget widget-user">
-            <div class="card-body text-center bg-info">
-              <span class="text-white">
-                <?php if($list->package_type == 1) { echo 'Product'; }
-                  elseif ($list->package_type == 2) { echo 'Service'; }
-                ?>
-              </span>
-              <h5 class=""><?php echo $list->package_name; ?></h5>
-            </div>
-              <div class="widget-user-header" style="background: url('<?php echo admin_url ?>assets/images/package/<?php echo $list->package_image;  ?>'); background-size: cover;">
-              </div>
-              <!-- <div class="widget-user-image">
-                <img style="height:90px !important;" class="img-circle elevation-2" src="<?php echo admin_url ?>assets/images/package/<?php echo $list->package_image;  ?>" alt="User Avatar">
-              </div> -->
-              <div class="card-footer pt-2">
-                <div class="row">
-                  <div class="col-4 border-right">
-                    <div class="description-block text-success">
-                      <h5 class="description-header"><?php echo $list->package_per_duration; ?> Days</h5>
-                      <span class="f-14">Validity</span>
-                    </div>
-                  </div>
-                  <div class="col-4 border-right">
-                    <div class="description-block text-danger">
-                      <h5 class="description-header">Rs. <?php if($smm_addedby_type == 1){ echo $list->package_cost; } else{ echo $list->reseller_package_new_price; } ?></h5>
-                      <span class="f-14">Price</span>
-                    </div>
-                  </div>
-                  <div class="col-4">
-                    <div class="description-block text-primary">
-                      <h5 class="description-header"><?php echo $list->package_revisions; ?></h5>
-                      <span class="f-14">Revisions</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <hr>
-                  </div>
-                  <div class="col-6">
-                    <a href="<?php echo base_url(); ?>Reseller/Res_Package/package_details/<?php echo $list->package_id; ?>" type="button" class="btn btn-sm btn-success" name="button">Details</a>
-                  </div>
-                  <div class="col-6 text-right div_add_to_list">
-                    <?php $check_pack = $this->Master_Model->get_info_arr_fields3('reseller_package_id', $smm_res_company_id, 'package_id', $list->package_id, 'reseller_id', $smm_reseller_id, '', '', 'smm_reseller_package');
-                    // get_info_arr_fields('reseller_package_id','package_id', $list->package_id, 'smm_reseller_package'); ?>
-                    <input type="hidden" class="package_id" name="package_id" value="<?php echo $list->package_id; ?>">
-                    <input type="hidden" class="package_cost" name="package_cost" value="<?php if($smm_addedby_type == 1){ echo $list->package_cost; } else{ echo $list->reseller_package_new_price; } ?>">
-                    <?php if($check_pack){ ?>
-                      <button type="button" class="btn btn-sm btn-info btn_add_to_list" name="button" disabled>Added</button>
-                    <?php } else{ ?>
-                      <button type="button" class="btn btn-sm btn-info btn_add_to_list" name="button">Add To List</button>
-                    <?php } ?>
+                  <table class="table table-striped">
+                    <thead class="thead-dark bg-green">
+                      <tr>
+                        <th class="bg-green" scope="col"> <i class="fas fa-tasks mr-2"></i> ID</th>
+                        <th class="bg-green" scope="col"><i class="fas fa-tasks mr-2"></i>  SERVICE</th>
+                        <th class="bg-green" scope="col"><i class="far fa-chart-bar mr-2"></i>RATE</th>
+                        <th class="bg-green" scope="col" style="max-width:150px;"><i class="fas fa-grip-lines mr-2"></i> DESCRIPTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+                      if($this->session->userdata('smm_addedby_type') == 1){
+                        $package_list = $this->Master_Model->get_list_by_id3($smm_res_company_id,'package_category_id',$package_category_list1->package_category_id,'','','','','package_id','DESC','smm_package');
+                      } else{
+                        $smm_addedby = $this->session->userdata('smm_addedby');
+                        $package_list = $this->Reseller_Model->reseller_package_list_by_category($smm_res_company_id,$smm_addedby,$package_category_list1->package_category_id);
+                      }
 
+                      if(isset($package_list)){
+                        $i=0; foreach ($package_list as $list) { $i++;
+                      ?>
+                        <tr>
+                          <th scope="row"><?php echo $i; ?></th>
+                          <td><?php echo $list->package_name; ?></td>
+                          <td><?php if($smm_addedby_type == 1){ echo $list->package_cost; } else{ echo $list->reseller_package_new_price; } ?></td>
+                          <td style="max-width:70px;">
+                            <a href="<?php echo base_url(); ?>Reseller/Res_Package/package_details/<?php echo $list->package_id; ?>" type="button" class="btn btn-primary bg-green btn-sm"><i class="fas fa-grip-lines "></i></a>
+                            <span class="div_add_to_list">
+                              <?php $check_pack = $this->Master_Model->get_info_arr_fields3('reseller_package_id', $smm_res_company_id, 'package_id', $list->package_id, 'reseller_id', $smm_reseller_id, '', '', 'smm_reseller_package');
+                              ?>
+                              <input type="hidden" class="package_id" name="package_id" value="<?php echo $list->package_id; ?>">
+                              <input type="hidden" class="package_cost" name="package_cost" value="<?php if($smm_addedby_type == 1){ echo $list->package_cost; } else{ echo $list->reseller_package_new_price; } ?>">
+                              <?php if($check_pack){ ?>
+                                <button type="button" class="btn btn-sm btn-info btn_add_to_list" name="button" disabled>Added</button>
+                              <?php } else{ ?>
+                                <button type="button" class="btn btn-sm btn-info btn_add_to_list" name="button">Add To List</button>
+                              <?php } ?>
+                            </span>
+                            <a href="<?php echo base_url(); ?>Reseller/Res_Payment/package_payment/<?php echo $list->package_id; ?>" type="button" class="btn btn-primary bg-green btn-xs">Buy Now</a>
+                          </td>
+                        </tr>
+                      <?php } } ?>
+                    </tbody>
+                  </table>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <?php } } ?>
+
+              <?php } } ?>
+
+
+
+            <!-- </div>
+          </div> -->
+        </div>
+
+
 
         </div>
       </div>

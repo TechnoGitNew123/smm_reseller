@@ -12,3 +12,56 @@
   font-size: 14px !important;
   margin-bottom: 1px !important;
 }
+
+.bb-1{
+	border-bottom: 1px solid rgba(129,129,129,.2);
+}
+
+.bg-green{
+	background-color: #83AC2B!important;
+    border: 1px solid #83AC2B!important;
+}
+
+.text-green{
+	color: #83AC2B!important;
+}
+
+.product-row{
+	border-bottom: 1px solid rgba(129,129,129,.2);
+}
+
+.border-shadow{
+	box-shadow:         2px 2px 2px 3px #ccc;
+}
+
+.top_navbar .dropdown-menu {
+    /* position: absolute; */
+    /* top: 100%; */
+    right: 0 !important;
+    left: auto !important;
+    /* z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem; */
+}
+
+@media screen and (max-width: 418px) {
+
+	#m-scroll{
+	overflow-x: auto;
+}
+
+		#m-scroll table{
+		width: 650px;
+}
+}

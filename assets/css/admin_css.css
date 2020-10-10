@@ -167,6 +167,9 @@ input[type=number] {
 }
 
 /* Table width */
+.wt_30{
+  width: 30px !important;
+}
 .wt_50{
   width: 50px !important;
 }
@@ -194,11 +197,11 @@ input[type=number] {
   background: #fff !important;
 }
 
-#example1 td{
+#example1 td, #example2 td{
   padding:7px 5px !important;
   font-size: 14px !important;
 }
-#example1 th{
+#example1 th, #example2 th{
   font-size: 14px !important;
 }
 

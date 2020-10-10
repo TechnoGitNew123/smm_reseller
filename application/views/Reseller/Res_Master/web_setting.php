@@ -121,7 +121,7 @@
                     <div class="form-group col-md-3">
                       <?php if(isset($web_setting_info) && $web_setting_info['web_setting_logo']){ ?>
                         <input type="hidden" name="old_web_setting_logo" value="<?php echo $web_setting_info['web_setting_logo']; ?>">
-                        <img width="150px" src="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info['web_setting_logo']; ?>" alt="">
+                        <img width="150px" src="<?php echo $web_setting_info['web_setting_logo']; ?>" alt="">
                       <?php } ?>
                     </div>
 
@@ -133,7 +133,7 @@
                     <div class="form-group col-md-3">
                       <?php if(isset($web_setting_info) && $web_setting_info['web_setting_favicon']){ ?>
                         <input type="hidden" name="old_web_setting_favicon" value="<?php echo $web_setting_info['web_setting_favicon']; ?>">
-                        <img width="150px" src="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info['web_setting_favicon']; ?>" alt="">
+                        <img width="150px" src="<?php echo $web_setting_info['web_setting_favicon']; ?>" alt="">
                       <?php } ?>
                     </div>
 

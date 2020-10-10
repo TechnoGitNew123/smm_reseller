@@ -23,27 +23,19 @@ class Res_Project extends CI_Controller{
   }
 
   // Edit/Update Project...
-  public function view_project($project_id){
+  public function project_details($project_id = null){
     $smm_reseller_id = $this->session->userdata('smm_reseller_id');
     $smm_res_company_id = $this->session->userdata('smm_res_company_id');
     if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
 
     $project_info = $this->Master_Model->get_info_arr('project_id',$project_id,'smm_project');
     if(!$project_info){ header('location:'.base_url().'Reseller/Res_Project/project'); }
-    $data['update'] = 'update';
-    $data['update_project'] = 'update';
-    $data['project_info'] = $project_info[0];
-    $data['act_link'] = base_url().'Reseller/Res_Project/edit_project/'.$project_id;
-    $data['client_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','client_name','ASC','smm_client');
-    $data['user_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'is_admin','0','','','','','user_name','ASC','user');
-    $data['project_file_list'] = $this->Master_Model->get_list_by_id3('','project_id',$project_id,'','','','','project_file_id','DESC','smm_project_file');
-    $data['project_del_phase_list'] = $this->Master_Model->get_list_by_id3('','project_id',$project_id,'','','','','project_del_phase_id','ASC','smm_project_del_phase');
 
-    $data['project_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','project_id','ASC','smm_project');
-    $data['page'] = 'Edit Project';
+    $data['project_info'] = $project_info[0];
+    $data['page'] = 'Project Details';
     $this->load->view('Reseller/Include/head', $data);
     $this->load->view('Reseller/Include/navbar', $data);
-    $this->load->view('Reseller/Res_Project/project', $data);
+    $this->load->view('Reseller/Res_Project/project_details', $data);
     $this->load->view('Reseller/Include/footer', $data);
   }
 

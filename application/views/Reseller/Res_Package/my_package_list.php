@@ -33,7 +33,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <?php if(isset($my_package_list)){
+          <!-- <?php if(isset($my_package_list)){
             $i=0; foreach ($my_package_list as $list) { $i++;
               $package_details = $this->Master_Model->get_info_arr_fields3('*', '', 'package_id', $list->package_id, '', '', '', '', 'smm_package');
               if($package_details){
@@ -51,9 +51,6 @@
             </div>
               <div class="widget-user-header" style="background: url('<?php echo admin_url ?>assets/images/package/<?php echo $package_details[0]['package_image'];  ?>'); background-size: cover;">
               </div>
-              <!-- <div class="widget-user-image">
-                <img style="height:90px !important;" class="img-circle elevation-2" src="<?php echo admin_url ?>assets/images/package/<?php echo $package_details[0]['package_image'];  ?>" alt="User Avatar">
-              </div> -->
               <div class="card-footer pt-2">
                 <div class="row">
                   <div class="col-6 border-right">
@@ -87,22 +84,59 @@
                   <div class="col-12">
                     <hr>
                   </div>
-                  <!-- <div class="col-3 text-left">
-                    <button type="button" class="btn btn-sm btn-info" name="button">Details</button>
-                  </div> -->
                   <div class="col-12 text-right div_change_price">
                     <input type="hidden" class="reseller_package_id" name="reseller_package_id" value="<?php echo $list->reseller_package_id; ?>">
                     <input type="hidden" class="reseller_package_new_price" name="reseller_package_new_price" value="<?php echo $list->reseller_package_new_price; ?>">
                     <button type="button" class="btn btn-sm btn-success btn_change_price" data-toggle="modal" data-target="#exampleModal">Change Price</button>
                   </div>
-                  <!-- <div class="col-3 text-right div_add_to_list">
-
-                  </div> -->
                 </div>
               </div>
             </div>
           </div>
-        <?php } } } ?>
+        <?php } } } ?> -->
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">List All Package</h3>
+            </div>
+            <div class="card-body p-2">
+              <table class="table table-striped">
+                <thead class="thead-dark bg-green">
+                  <tr>
+                    <th class="bg-green" scope="col"> <i class="fas fa-tasks mr-2"></i> ID</th>
+                    <th class="bg-green" scope="col"><i class="fas fa-tasks mr-2"></i>  SERVICE</th>
+                    <th class="bg-green" scope="col"><i class="far fa-chart-bar mr-2"></i>RATE</th>
+                    <th class="bg-green" scope="col" style="max-width:150px;"><i class="fas fa-grip-lines mr-2"></i> DESCRIPTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if(isset($my_package_list)){
+                    $i=0; foreach ($my_package_list as $list) { $i++;
+                      $package_details = $this->Master_Model->get_info_arr_fields3('*', '', 'package_id', $list->package_id, '', '', '', '', 'smm_package');
+                      if($package_details){
+                  ?>
+                    <tr>
+                      <th scope="row"><?php echo $i; ?></th>
+                      <td><?php echo $package_details[0]['package_name']; ?></td>
+                      <td><?php echo $list->reseller_package_new_price; ?></td>
+                      <td style="max-width:70px;">
+                        <a href="<?php echo base_url(); ?>Reseller/Res_Package/package_details/<?php echo $list->package_id; ?>" type="button" class="btn btn-primary bg-green btn-sm"><i class="fas fa-grip-lines "></i></a>
+                        <span class="div_change_price">
+                          <input type="hidden" class="reseller_package_id" name="reseller_package_id" value="<?php echo $list->reseller_package_id; ?>">
+                          <input type="hidden" class="reseller_package_new_price" name="reseller_package_new_price" value="<?php echo $list->reseller_package_new_price; ?>">
+                          <button type="button" class="btn btn-sm btn-success btn_change_price" data-toggle="modal" data-target="#exampleModal">Change Price</button>
+                        </span>
+
+                        <!-- <a href="http://localhost/smm_reseller2/WebsiteController/buy_now/4" type="button" class="btn btn-sm btn-primary">Buy Now</a> -->
+                      </td>
+                    </tr>
+                  <?php } } } ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
         </div>
       </div>

@@ -40,14 +40,20 @@ class WebsiteController extends CI_Controller{
    }
  }
 
+ // Home Page...
  public function home(){
+   $this->session->unset_userdata('buy_reseller_package_id');
+
    $web_reseller_id = $this->session->userdata('web_reseller_id');
    $web_company_id = $this->session->userdata('web_company_id');
    $web_template_id = $this->session->userdata('web_template_id');
    if(!$web_reseller_id || !$web_company_id || !$web_template_id){ header('location:'.base_url().''); }
    $data['web_template_id'] = $web_template_id;
    $data['web_setting_info'] = $this->Master_Model->get_info_arr_fields3('*', $web_company_id, 'reseller_id', $web_reseller_id, 'web_setting_addedby_type', '2', '', '', 'smm_web_setting');
-   $data['testomonial_list'] = $data['project_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'testimonial_addedby_type','2','testimonial_addedby',$web_reseller_id,'','','testimonial_id','DESC','smm_testimonial');
+   $data['testimonial_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'testimonial_addedby_type','2','testimonial_addedby',$web_reseller_id,'','','testimonial_id','DESC','smm_testimonial');
+   $data['package_category_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'','','','','','','package_category_id','DESC','smm_package_category');
+   $data['blog_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'blog_addedby_type','2','blog_addedby',$web_reseller_id,'','','blog_id','DESC','smm_blog');
+
    $data['package_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'reseller_id',$web_reseller_id,'','','','','reseller_package_id','DESC','smm_reseller_package');
    $data['page'] = 'Home';
    $this->load->view('Website/home1', $data);
@@ -59,7 +65,6 @@ class WebsiteController extends CI_Controller{
    // } elseif($web_template_id == 3){
    //   $this->load->view('Website/home3', $data);
    // }
-
  }
 
  public function login(){
@@ -72,8 +77,6 @@ class WebsiteController extends CI_Controller{
    $data['web_template_id'] = $web_template_id;
    $data['web_setting_info'] = $this->Master_Model->get_info_arr_fields3('*', $web_company_id, 'reseller_id', $web_reseller_id, 'web_setting_addedby_type', '2', '', '', 'smm_web_setting');
    $data['page'] = 'Login';
-
-   // echo $web_reseller_id;
 
    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
@@ -98,7 +101,12 @@ class WebsiteController extends CI_Controller{
          $this->session->set_userdata('smm_addedby_type', $login[0]['reseller_added_type']);
          $this->session->set_userdata('smm_addedby', $login[0]['reseller_addedby']);
          // $this->session->set_userdata('branch_id', $login[0]['branch_id']);
-         header('location:'.base_url().'Home');
+         if($this->session->userdata('buy_reseller_package_id')){
+           header('location:'.base_url().'Payment');
+         } else{
+           header('location:'.base_url().'Home');
+         }
+
        }
      }
    }
@@ -214,6 +222,45 @@ class WebsiteController extends CI_Controller{
    $this->load->view('Website/profile_add', $data);
  }
 
+ // Blog List
+ public function blog_list(){
+   $web_reseller_id = $this->session->userdata('web_reseller_id');
+   $web_company_id = $this->session->userdata('web_company_id');
+   $web_template_id = $this->session->userdata('web_template_id');
+   if(!$web_reseller_id || !$web_company_id || !$web_template_id){ header('location:'.base_url().''); }
+   $data['web_template_id'] = $web_template_id;
+   $data['web_setting_info'] = $this->Master_Model->get_info_arr_fields3('*', $web_company_id, 'reseller_id', $web_reseller_id, 'web_setting_addedby_type', '2', '', '', 'smm_web_setting');
+   // $data['testimonial_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'testimonial_addedby_type','2','testimonial_addedby',$web_reseller_id,'','','testimonial_id','DESC','smm_testimonial');
+   // $data['package_category_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'','','','','','','package_category_id','DESC','smm_package_category');
+   $data['blog_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'blog_addedby_type','2','blog_addedby',$web_reseller_id,'','','blog_id','DESC','smm_blog');
+
+   // $data['package_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'reseller_id',$web_reseller_id,'','','','','reseller_package_id','DESC','smm_reseller_package');
+   $data['page'] = 'Blog List';
+   $this->load->view('Website/blog_list', $data);
+
+ }
+
+ // Blog Details
+ public function blog_details($blog_id = null){
+   $web_reseller_id = $this->session->userdata('web_reseller_id');
+   $web_company_id = $this->session->userdata('web_company_id');
+   $web_template_id = $this->session->userdata('web_template_id');
+   if(!$web_reseller_id || !$web_company_id || !$web_template_id){ header('location:'.base_url().''); }
+   $data['web_template_id'] = $web_template_id;
+   $data['web_setting_info'] = $this->Master_Model->get_info_arr_fields3('*', $web_company_id, 'reseller_id', $web_reseller_id, 'web_setting_addedby_type', '2', '', '', 'smm_web_setting');
+   // $data['testimonial_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'testimonial_addedby_type','2','testimonial_addedby',$web_reseller_id,'','','testimonial_id','DESC','smm_testimonial');
+   // $data['package_category_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'','','','','','','package_category_id','DESC','smm_package_category');
+   $data['blog_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'blog_addedby_type','2','blog_addedby',$web_reseller_id,'','','blog_id','DESC','smm_blog');
+
+   $blog_info = $this->Master_Model->get_info_arr('blog_id',$blog_id,'smm_blog');
+   if(!$blog_info){ header('location:'.base_url().'Blog-List'); }
+   $data['blog_info'] = $blog_info[0];
+   // $data['package_list'] = $this->Master_Model->get_list_by_id3($web_company_id,'reseller_id',$web_reseller_id,'','','','','reseller_package_id','DESC','smm_reseller_package');
+   $data['page'] = 'Blog Details';
+   $this->load->view('Website/blog_details', $data);
+
+ }
+
 /**************************************************************************************/
 /*                                        Buy Package                                 */
 /**************************************************************************************/
@@ -224,9 +271,9 @@ class WebsiteController extends CI_Controller{
     $web_template_id = $this->session->userdata('web_template_id');
     if(!$web_reseller_id || !$web_company_id || !$web_template_id){ header('location:'.base_url().''); }
 
-    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
-    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
-    if(!$smm_reseller_id || !$smm_res_company_id){ header('location:'.base_url().''); }
+    // $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    // $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+    // if(!$smm_reseller_id || !$smm_res_company_id){ header('location:'.base_url().''); }
 
     $this->session->set_userdata('buy_reseller_package_id', $reseller_package_id);
     header('location:'.base_url().'Payment');
@@ -235,6 +282,7 @@ class WebsiteController extends CI_Controller{
 
   // Payment...
   public function payment(){
+    unset($_SESSION['coupon_code']);
     $web_reseller_id = $this->session->userdata('web_reseller_id');
     $web_company_id = $this->session->userdata('web_company_id');
     $web_template_id = $this->session->userdata('web_template_id');
@@ -244,26 +292,33 @@ class WebsiteController extends CI_Controller{
 
     $smm_reseller_id = $this->session->userdata('smm_reseller_id');
     $smm_res_company_id = $this->session->userdata('smm_res_company_id');
-    if(!$smm_reseller_id || !$smm_res_company_id){ header('location:'.base_url().''); }
+    // if(!$smm_reseller_id || !$smm_res_company_id){ header('location:'.base_url().''); }
 
     $reseller_package_id = $this->session->userdata('buy_reseller_package_id');
     if($reseller_package_id == ''){ header('location:'.base_url().''); }
     // echo $reseller_package_id;
     $reseller_package_info = $this->Master_Model->get_info_arr('reseller_package_id',$reseller_package_id,'smm_reseller_package');
     if(!$reseller_package_info){ header('location:'.base_url().''); }
+    $package_id = $reseller_package_info[0]['package_id'];
 
-    $package_info = $this->Master_Model->get_info_arr('package_id',$reseller_package_info[0]['package_id'],'smm_package');
+    $package_feature_list = $this->Master_Model->get_list_by_id3('','package_id',$package_id,'','','','','package_feature_id','ASC','smm_package_feature');
+
+    $package_info = $this->Master_Model->get_info_arr('package_id',$package_id,'smm_package');
     if(!$package_info){ header('location:'.base_url().''); }
 
-    $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$smm_reseller_id,'smm_reseller');
-    if(!$reseller_info){ header('location:'.base_url().''); }
+    if($smm_reseller_id){
+      $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$smm_reseller_id,'smm_reseller');
+      if(!$reseller_info){ header('location:'.base_url().''); }
+    }
 
-    $payment_gateway_info = $this->Master_Model->get_info_arr_fields3('payment_gateway_key_id, payment_gateway_secret_key', $smm_res_company_id, 'payment_gateway_is_default', '1', '', '', '', '', 'smm_payment_gateway');
+    $payment_gateway_info = $this->Master_Model->get_info_arr_fields3('payment_gateway_key_id, payment_gateway_secret_key', $web_company_id, 'payment_gateway_is_default', '1', '', '', '', '', 'smm_payment_gateway');
     if(!$payment_gateway_info){ header('location:'.base_url().''); }
 
-    $this->session->set_userdata('order_client_id', $smm_reseller_id);
+    if($smm_reseller_id){
+      $this->session->set_userdata('order_client_id', $smm_reseller_id);
+    }
     $this->session->set_userdata('order_reseller_id', $web_reseller_id);
-    $this->session->set_userdata('order_company_id', $smm_res_company_id);
+    $this->session->set_userdata('order_company_id', $web_company_id);
 
     $gst_slab_id = $package_info[0]['gst_slab_id'];
     $gst_slab_info = $this->Master_Model->get_info_arr_fields3('gst_slab_per', '', 'gst_slab_id', $gst_slab_id, '', '', '', '', 'smm_gst_slab');
@@ -279,15 +334,38 @@ class WebsiteController extends CI_Controller{
     $package_basic_amt = $subtotal - $package_gst_amt;
     $package_basic_amt = round($package_basic_amt, 2);
 
+    $this->form_validation->set_rules('coupon_code', 'Coupon Code', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      if(isset($web_reseller_id)){
+        $coupon_code = $_POST['coupon_code'];
+        $coupon_details = $this->Master_Model->get_info_arr_fields3('*', $smm_res_company_id, 'reseller_id', $web_reseller_id, 'package_id', $package_id, 'reseller_coupon_code', $coupon_code, 'smm_reseller_coupon');
+        if($coupon_details){
+          $data['coupon_applied'] = 'Yes';
+          $coupon_amount = $coupon_details[0]['reseller_coupon_amt'];
+          $data['coupon_discount_amount'] = $coupon_amount;
+          unset($_SESSION['invalid_coupon']);
+          $this->session->set_flashdata('valid_coupon','success');
+          $this->session->set_userdata('coupon_code',$coupon_code);
+        } else{
+          unset($_SESSION['valid_coupon']);
+          unset($_SESSION['coupon_code']);
+          $this->session->set_flashdata('invalid_coupon','error');
+        }
+      }
+    }
+
+    if($smm_reseller_id){
+      $data['reseller_info'] = $reseller_info[0];
+    }
     $data['payment_gateway_info'] = $payment_gateway_info[0];
-    $data['reseller_info'] = $reseller_info[0];
     $data['reseller_package_info'] = $reseller_package_info[0];
     $data['package_info'] = $package_info[0];
+    $data['package_feature_list'] = $package_feature_list;
     $data['package_gst_amt'] = $package_gst_amt;
     $data['package_basic_amt'] = $package_basic_amt;
     $data['package_cost'] = $subtotal;
-
     $data['page'] = 'Payment';
+
     $this->load->view('Website/payment_details', $data);
   }
 
@@ -301,14 +379,14 @@ class WebsiteController extends CI_Controller{
     $razorpay_order_id = $_POST['razorpay_order_id'];
 
     if(!$order_reseller_id || !$order_company_id || !$order_client_id){ header('location:'.base_url().''); }
-
+    if(!$razorpay_payment_id){ header('location:'.base_url().''); }
     $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$order_client_id,'smm_reseller');
     $reseller_info_seller = $this->Master_Model->get_info_arr('reseller_id',$order_reseller_id,'smm_reseller');
 
     $reseller_package_id = $this->session->userdata('buy_reseller_package_id');
     $reseller_package_info = $this->Master_Model->get_info_arr('reseller_package_id',$reseller_package_id,'smm_reseller_package');
-
-    $package_info = $this->Master_Model->get_info_arr('package_id',$reseller_package_info[0]['package_id'],'smm_package');
+    $package_id = $reseller_package_info[0]['package_id'];
+    $package_info = $this->Master_Model->get_info_arr('package_id',$package_id,'smm_package');
 
     $gst_slab_id = $package_info[0]['gst_slab_id'];
     $gst_slab_info = $this->Master_Model->get_info_arr_fields3('gst_slab_per', '', 'gst_slab_id', $gst_slab_id, '', '', '', '', 'smm_gst_slab');
@@ -318,11 +396,35 @@ class WebsiteController extends CI_Controller{
      $gst_slab_per = 0;
     }
 
+    $package_cost = $reseller_package_info[0]['reseller_package_new_price'];
     $subtotal = $reseller_package_info[0]['reseller_package_new_price'];
     $package_gst_amt = $subtotal * $gst_slab_per/(100 + $gst_slab_per);
     $package_gst_amt = round($package_gst_amt, 2);
     $package_basic_amt = $subtotal - $package_gst_amt;
     $package_basic_amt = round($package_basic_amt, 2);
+
+    $start_date = date('d-m-Y');
+
+    $new_start_date = strtotime($start_date);
+    $end_date = strtotime("+".$package_info[0]['package_per_duration']." day", $new_start_date);
+    $end_date = date('d-m-Y', $end_date);
+
+    // Check Coupon... If Used...
+    $coupon_code = $this->session->userdata('coupon_code');
+    if($coupon_code){
+      $coupon_details = $this->Master_Model->get_info_arr_fields3('*', $order_company_id, 'reseller_id', $order_reseller_id, 'package_id', $package_id, 'reseller_coupon_code', $coupon_code, 'smm_reseller_coupon');
+      if($coupon_details){
+        $coupon_applied = 'Yes';
+        $coupon_amount = $coupon_details[0]['reseller_coupon_amt'];
+        $subtotal = $package_cost - $coupon_amount;
+      } else{
+        $coupon_applied = 'No';
+        $coupon_amount = 0;
+      }
+    } else{
+      $coupon_applied = 'No';
+      $coupon_amount = 0;
+    }
 
     $order_no = $this->Master_Model->get_count_no3($order_company_id, 'order_no', 'reseller_id', $order_reseller_id, '', '', '', '', 'smm_order');
 
@@ -330,12 +432,15 @@ class WebsiteController extends CI_Controller{
       'razorpay_payment_id' => $razorpay_payment_id,
       'razorpay_order_id' => $razorpay_order_id,
       'order_date' => date('d-m-Y'),
+      'order_start_date' => $start_date,
+      'order_end_date' => $end_date,
       'order_no' => $order_no,
       'client_id' => $order_client_id,
       'reseller_id' => $order_reseller_id,
       'company_id' => $order_company_id,
       'order_client_name' => $reseller_info[0]['reseller_name'],
       'order_client_address' => $reseller_info[0]['reseller_address'],
+      'order_client_pincode' => $reseller_info[0]['reseller_pincode'],
       'country_id' => $reseller_info[0]['country_id'],
       'state_id' => $reseller_info[0]['state_id'],
       'city_id' => $reseller_info[0]['city_id'],
@@ -344,6 +449,7 @@ class WebsiteController extends CI_Controller{
       'order_basic_amount' => $package_basic_amt,
       'order_gst_amount' => $package_gst_amt,
       'order_net_amount' => $subtotal,
+      'coupon_discount_amount' => $coupon_amount,
       'order_status' => '1',
       'payment_status' => '1',
       'order_addedby' => $order_client_id,
@@ -356,7 +462,11 @@ class WebsiteController extends CI_Controller{
 
     $invoice_no = $this->Master_Model->get_count_no3($order_company_id, 'invoice_no', 'reseller_id', $order_reseller_id, '', '', '', '', 'smm_invoice');
     $invoice_data = array(
+      'razorpay_payment_id' => $razorpay_payment_id,
+      'razorpay_order_id' => $razorpay_order_id,
       'invoice_date' => date('d-m-Y'),
+      'invoice_start_date' => $start_date,
+      'invoice_end_date' => $end_date,
       'invoice_no' => $invoice_no,
       'invoice_no_prefix' => $reseller_info_seller[0]['reseller_invoice_prefix'],
       'client_id' => $order_client_id,
@@ -368,18 +478,43 @@ class WebsiteController extends CI_Controller{
       'package_name' => $package_info[0]['package_name'],
       'invoice_client_name' => $reseller_info[0]['reseller_name'],
       'invoice_client_address' => $reseller_info[0]['reseller_address'],
+      'invoice_client_pincode' => $reseller_info[0]['reseller_pincode'],
       'country_id' => $reseller_info[0]['country_id'],
       'state_id' => $reseller_info[0]['state_id'],
       'city_id' => $reseller_info[0]['city_id'],
       'invoice_client_mobile' => $reseller_info[0]['reseller_mobile'],
       'invoice_client_email' => $reseller_info[0]['reseller_email'],
+      'invoice_client_gstin' => $reseller_info[0]['reseller_gst_no'],
+      'invoice_client_statecode' => $reseller_info[0]['reseller_statecode'],
       'gst_slab_per' => $gst_slab_per,
       'invoice_basic_amt' => $package_basic_amt,
       'invoice_gst_amt' => $package_gst_amt,
       'invoice_net_amt' => $subtotal,
+      'coupon_discount_amount' => $coupon_amount,
       'invoice_addedby_type' => '3',
+      'invoice_type' => '1',
+      'ref_order_id' => $order_id,
     );
     $invoice_id = $this->Master_Model->save_data('smm_invoice', $invoice_data);
+
+    // Save Coupon.... If Used.......
+    if($coupon_applied == 'Yes'){
+      $reseller_coupon_id = '0';
+      if($coupon_details){ $reseller_coupon_id = $coupon_details[0]['reseller_coupon_id']; }
+      $coupon_save_data = array(
+        'company_id' => $order_company_id,
+        'order_id' => $order_id,
+        'package_id' => $package_id,
+        'client_id' => $order_client_id,
+        'reseller_id' => $order_reseller_id,
+        'net_amount' => $package_cost,
+        'discount_amount' => $coupon_amount,
+        'coupon_code' => $coupon_code,
+        'reseller_coupon_id' => $reseller_coupon_id,
+        'invoice_id' => $invoice_id,
+      );
+      $res_coupon_used_id = $this->Master_Model->save_data('smm_res_coupon_used', $coupon_save_data);
+    }
 
     $reseller_added_type = $reseller_info[0]['reseller_added_type'];
     $order_reseller_id = $order_reseller_id;
@@ -407,7 +542,10 @@ class WebsiteController extends CI_Controller{
       $package_basic_amt = round($package_basic_amt, 2);
 
       $commission = $reseller_package_info[0]['reseller_package_new_price'] - $reseller_package_info[0]['reseller_package_prev_price'];
-      if($cnt == 0){ $commission_type = '1'; }
+      if($cnt == 0){
+        $commission_type = '1';
+        $commission = $commission - $coupon_amount;
+      }
       else{ $commission_type = '2'; }
       $commission_data = array(
         'company_id' => $order_company_id,
@@ -422,6 +560,8 @@ class WebsiteController extends CI_Controller{
       $invoice_no = $this->Master_Model->get_count_no3($order_company_id, 'invoice_no', 'reseller_id', $order_reseller_id, '', '', '', '', 'smm_invoice');
       $invoice_data = array(
         'invoice_date' => date('d-m-Y'),
+        'invoice_start_date' => $start_date,
+        'invoice_end_date' => $end_date,
         'invoice_no' => $invoice_no,
         'invoice_no_prefix' => $reseller_invoice_prefix,
         'client_id' => $client_reseller_id,
@@ -433,16 +573,21 @@ class WebsiteController extends CI_Controller{
         'package_name' => $package_info[0]['package_name'],
         'invoice_client_name' => $reseller_info[0]['reseller_name'],
         'invoice_client_address' => $reseller_info[0]['reseller_address'],
+        'invoice_client_pincode' => $reseller_info[0]['reseller_pincode'],
         'country_id' => $reseller_info[0]['country_id'],
         'state_id' => $reseller_info[0]['state_id'],
         'city_id' => $reseller_info[0]['city_id'],
         'invoice_client_mobile' => $reseller_info[0]['reseller_mobile'],
         'invoice_client_email' => $reseller_info[0]['reseller_email'],
+        'invoice_client_gstin' => $reseller_info[0]['reseller_gst_no'],
+        'invoice_client_statecode' => $reseller_info[0]['reseller_statecode'],
         'gst_slab_per' => $gst_slab_per,
         'invoice_basic_amt' => $package_basic_amt,
         'invoice_gst_amt' => $package_gst_amt,
         'invoice_net_amt' => $subtotal,
         'invoice_addedby_type' => '4',
+        'invoice_type' => '1',
+        'ref_order_id' => $order_id,
       );
       $invoice_id = $this->Master_Model->save_data('smm_invoice', $invoice_data);
 

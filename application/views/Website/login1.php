@@ -16,7 +16,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/admin_css.css">
-  
+
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -33,7 +33,7 @@
 
 <div class="login-box">
   <div class="login-logo ">
-    <span class="login-box-msg"> <img width="150px;" src="<?php echo base_url(); ?>assets/images/web_setting/<?php echo $web_setting_info[0]['web_setting_logo']; ?>"> </span>
+    <span class="login-box-msg"> <img width="150px;" src="<?php echo $web_setting_info[0]['web_setting_logo']; ?>"> </span>
     <!-- <br><i class="fas fa-hospital-alt"></i> -->
   </div>
   <!-- /.login-logo -->
@@ -70,8 +70,8 @@
       <div class="row">
         <div class="col-md-6">
           <p class="mb-1">
-        <a href="<?php echo base_url(); ?>User/forgot_password">I forgot my password</a>
-      </p>
+            <!-- <a href="<?php echo base_url(); ?>User/forgot_password">I forgot my password</a> -->
+          </p>
         </div>
         <div class="col-md-6 text-right">
           <p class="mb-1">

@@ -15,53 +15,53 @@ class Res_Master extends CI_Controller{
     $smm_res_company_id = $this->session->userdata('smm_res_company_id');
     if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
 
-    $this->form_validation->set_rules('reseller_name', 'reseller title', 'trim|required');
-    if ($this->form_validation->run() != FALSE) {
-      $reseller_status = $this->input->post('reseller_status');
-      if(!isset($reseller_status)){ $reseller_status = '1'; }
-      $save_data = $_POST;
-      $save_data['reseller_status'] = $reseller_status;
-      $save_data['company_id'] = $smm_res_company_id;
-      $save_data['reseller_added_type'] = '2';
-      $save_data['reseller_addedby'] = $smm_reseller_id;
-      $reseller_id = $this->Master_Model->save_data('smm_reseller', $save_data);
-
-      $save_web_setting = array(
-        'company_id' => $company_id,
-        'reseller_id' => $reseller_id,
-        'web_setting_name' => $_POST['reseller_name'],
-        'web_setting_address' => $_POST['reseller_address'],
-        'country_id' => $_POST['country_id'],
-        'state_id' => $_POST['state_id'],
-        'city_id' => $_POST['city_id'],
-        'web_setting_addedby_type' => 2,
-      );
-      $web_setting_id = $this->Master_Model->save_data('smm_web_setting', $save_web_setting);
-
-      if($_FILES['reseller_logo']['name']){
-        $time = time();
-        $image_name = 'reseller_'.$reseller_id.'_'.$time;
-        $config['upload_path'] = 'assets/images/reseller/';
-        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-        $config['file_name'] = $image_name;
-        $filename = $_FILES['reseller_logo']['name'];
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $this->upload->initialize($config); // if upload library autoloaded
-        if ($this->upload->do_upload('reseller_logo') && $reseller_id && $image_name && $ext && $filename){
-          $reseller_logo_up['reseller_logo'] =  base_url().'assets/images/reseller/'.$image_name.'.'.$ext;
-          $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $reseller_logo_up);
-          // unlink("assets/images/tours/".$reseller_logo_old);
-          $this->session->set_flashdata('upload_success','File Uploaded Successfully');
-        }
-        else{
-          $error = $this->upload->display_errors();
-          $this->session->set_flashdata('upload_error',$error);
-        }
-      }
-      $this->session->set_flashdata('save_success','success');
-      header('location:'.base_url().'Reseller/Res_Master/reseller');
-    }
-    $data['country_list'] = $this->Master_Model->get_list_by_id3('','','','','','','','country_name','ASC','country');
+    // $this->form_validation->set_rules('reseller_name', 'reseller title', 'trim|required');
+    // if ($this->form_validation->run() != FALSE) {
+    //   $reseller_status = $this->input->post('reseller_status');
+    //   if(!isset($reseller_status)){ $reseller_status = '1'; }
+    //   $save_data = $_POST;
+    //   $save_data['reseller_status'] = $reseller_status;
+    //   $save_data['company_id'] = $smm_res_company_id;
+    //   $save_data['reseller_added_type'] = '2';
+    //   $save_data['reseller_addedby'] = $smm_reseller_id;
+    //   $reseller_id = $this->Master_Model->save_data('smm_reseller', $save_data);
+    //
+    //   $save_web_setting = array(
+    //     'company_id' => $company_id,
+    //     'reseller_id' => $reseller_id,
+    //     'web_setting_name' => $_POST['reseller_name'],
+    //     'web_setting_address' => $_POST['reseller_address'],
+    //     'country_id' => $_POST['country_id'],
+    //     'state_id' => $_POST['state_id'],
+    //     'city_id' => $_POST['city_id'],
+    //     'web_setting_addedby_type' => 2,
+    //   );
+    //   $web_setting_id = $this->Master_Model->save_data('smm_web_setting', $save_web_setting);
+    //
+    //   if($_FILES['reseller_logo']['name']){
+    //     $time = time();
+    //     $image_name = 'reseller_'.$reseller_id.'_'.$time;
+    //     $config['upload_path'] = 'assets/images/reseller/';
+    //     $config['allowed_types'] = 'jpg|jpeg|png|gif';
+    //     $config['file_name'] = $image_name;
+    //     $filename = $_FILES['reseller_logo']['name'];
+    //     $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    //     $this->upload->initialize($config); // if upload library autoloaded
+    //     if ($this->upload->do_upload('reseller_logo') && $reseller_id && $image_name && $ext && $filename){
+    //       $reseller_logo_up['reseller_logo'] =  base_url().'assets/images/reseller/'.$image_name.'.'.$ext;
+    //       $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $reseller_logo_up);
+    //       // unlink("assets/images/tours/".$reseller_logo_old);
+    //       $this->session->set_flashdata('upload_success','File Uploaded Successfully');
+    //     }
+    //     else{
+    //       $error = $this->upload->display_errors();
+    //       $this->session->set_flashdata('upload_error',$error);
+    //     }
+    //   }
+    //   $this->session->set_flashdata('save_success','success');
+    //   header('location:'.base_url().'Reseller/Res_Master/reseller');
+    // }
+    // $data['country_list'] = $this->Master_Model->get_list_by_id3('','','','','','','','country_name','ASC','country');
     // $data['branch_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','branch_name','ASC','smm_branch');
 
     $data['reseller_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'reseller_added_type','2','reseller_addedby',$smm_reseller_id,'','','reseller_id','DESC','smm_reseller');
@@ -72,65 +72,68 @@ class Res_Master extends CI_Controller{
     $this->load->view('Reseller/Include/footer', $data);
   }
 
-  // Edit Reseller...
-  public function edit_reseller($reseller_id){
-    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
-    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
-
-    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
-
-    $this->form_validation->set_rules('reseller_name', 'reseller title', 'trim|required');
-    if ($this->form_validation->run() != FALSE) {
-      $reseller_status = $this->input->post('reseller_status');
-      if(!isset($reseller_status)){ $reseller_status = '1'; }
-      $update_data = $_POST;
-      unset($update_data['old_reseller_logo']);
-      $update_data['reseller_status'] = $reseller_status;
-      $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $update_data);
-
-      if($_FILES['reseller_logo']['name']){
-        $time = time();
-        $image_name = 'reseller_'.$reseller_id.'_'.$time;
-        $config['upload_path'] = 'assets/images/reseller/';
-        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-        $config['file_name'] = $image_name;
-        $filename = $_FILES['reseller_logo']['name'];
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $this->upload->initialize($config); // if upload library autoloaded
-        if ($this->upload->do_upload('reseller_logo') && $reseller_id && $image_name && $ext && $filename){
-          $reseller_logo_up['reseller_logo'] =  base_url().'assets/images/reseller/'.$image_name.'.'.$ext;
-          $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $reseller_logo_up);
-          if($_POST['old_reseller_logo']){ unlink("".$_POST['old_reseller_logo']); }
-          $this->session->set_flashdata('upload_success','File Uploaded Successfully');
-        }
-        else{
-          $error = $this->upload->display_errors();
-          $this->session->set_flashdata('upload_error',$error);
-        }
-      }
-      $this->session->set_flashdata('update_success','success');
-      header('location:'.base_url().'Reseller/Res_Master/reseller');
-    }
-    $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$reseller_id,'smm_reseller');
-    if(!$reseller_info){ header('location:'.base_url().'Reseller/Res_Master/reseller'); }
-    $data['update'] = 'update';
-    $data['update_reseller'] = 'update';
-    $data['reseller_info'] = $reseller_info[0];
-    $data['act_link'] = base_url().'Reseller/Res_Master/edit_reseller/'.$reseller_id;
-    $state_id = $reseller_info[0]['state_id'];
-    $country_id = $reseller_info[0]['country_id'];
-    $data['country_list'] = $this->Master_Model->get_list_by_id3('','','','','','','','country_name','ASC','country');
-    $data['state_list'] = $this->Master_Model->get_list_by_id3('','country_id',$country_id,'','','','','state_name','ASC','state');
-    $data['city_list'] = $this->Master_Model->get_list_by_id3('','state_id',$state_id,'','','','','city_name','ASC','city');
-    // $data['branch_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','branch_name','ASC','smm_branch');
-
-    $data['reseller_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'reseller_added_type','2','reseller_addedby',$smm_reseller_id,'','','reseller_id','DESC','smm_reseller');
-    $data['page'] = 'Edit Reseller';
-    $this->load->view('Reseller/Include/head', $data);
-    $this->load->view('Reseller/Include/navbar', $data);
-    $this->load->view('Reseller/Res_Master/reseller', $data);
-    $this->load->view('Reseller/Include/footer', $data);
-  }
+  // // Edit Reseller...
+  // public function edit_reseller($reseller_id){
+  //   $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+  //   $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+  //
+  //   if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+  //
+  //   $this->form_validation->set_rules('reseller_name', 'reseller title', 'trim|required');
+  //   if ($this->form_validation->run() != FALSE) {
+  //     $reseller_status = $this->input->post('reseller_status');
+  //     if(!isset($reseller_status)){ $reseller_status = '1'; }
+  //     $update_data = $_POST;
+  //     unset($update_data['old_reseller_logo']);
+  //     $update_data['reseller_status'] = $reseller_status;
+  //     $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $update_data);
+  //
+  //     if($_FILES['reseller_logo']['name']){
+  //       $time = time();
+  //       $image_name = 'reseller_'.$reseller_id.'_'.$time;
+  //       $config['upload_path'] = 'assets/images/reseller/';
+  //       $config['allowed_types'] = 'jpg|jpeg|png|gif';
+  //       $config['file_name'] = $image_name;
+  //       $filename = $_FILES['reseller_logo']['name'];
+  //       $ext = pathinfo($filename, PATHINFO_EXTENSION);
+  //       $this->upload->initialize($config); // if upload library autoloaded
+  //       if ($this->upload->do_upload('reseller_logo') && $reseller_id && $image_name && $ext && $filename){
+  //         $reseller_logo_up['reseller_logo'] =  base_url().'assets/images/reseller/'.$image_name.'.'.$ext;
+  //         $this->Master_Model->update_info('reseller_id', $reseller_id, 'smm_reseller', $reseller_logo_up);
+  //         if($_POST['old_reseller_logo']){
+  //           $unlink_image = str_replace(base_url(), "",$_POST['old_reseller_logo']);
+  //           unlink($unlink_image);
+  //         }
+  //         $this->session->set_flashdata('upload_success','File Uploaded Successfully');
+  //       }
+  //       else{
+  //         $error = $this->upload->display_errors();
+  //         $this->session->set_flashdata('upload_error',$error);
+  //       }
+  //     }
+  //     $this->session->set_flashdata('update_success','success');
+  //     header('location:'.base_url().'Reseller/Res_Master/reseller');
+  //   }
+  //   $reseller_info = $this->Master_Model->get_info_arr('reseller_id',$reseller_id,'smm_reseller');
+  //   if(!$reseller_info){ header('location:'.base_url().'Reseller/Res_Master/reseller'); }
+  //   $data['update'] = 'update';
+  //   $data['update_reseller'] = 'update';
+  //   $data['reseller_info'] = $reseller_info[0];
+  //   $data['act_link'] = base_url().'Reseller/Res_Master/edit_reseller/'.$reseller_id;
+  //   $state_id = $reseller_info[0]['state_id'];
+  //   $country_id = $reseller_info[0]['country_id'];
+  //   $data['country_list'] = $this->Master_Model->get_list_by_id3('','','','','','','','country_name','ASC','country');
+  //   $data['state_list'] = $this->Master_Model->get_list_by_id3('','country_id',$country_id,'','','','','state_name','ASC','state');
+  //   $data['city_list'] = $this->Master_Model->get_list_by_id3('','state_id',$state_id,'','','','','city_name','ASC','city');
+  //   // $data['branch_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'','','','','','','branch_name','ASC','smm_branch');
+  //
+  //   $data['reseller_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'reseller_added_type','2','reseller_addedby',$smm_reseller_id,'','','reseller_id','DESC','smm_reseller');
+  //   $data['page'] = 'Edit Reseller';
+  //   $this->load->view('Reseller/Include/head', $data);
+  //   $this->load->view('Reseller/Include/navbar', $data);
+  //   $this->load->view('Reseller/Res_Master/reseller', $data);
+  //   $this->load->view('Reseller/Include/footer', $data);
+  // }
 
   // Delete Reseller...
   // public function delete_reseller($reseller_id){
@@ -301,7 +304,7 @@ class Res_Master extends CI_Controller{
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
         if ($this->upload->do_upload('testimonial_image') && $testimonial_id && $image_name && $ext && $filename){
-          $testimonial_image_up['testimonial_image'] =  $image_name.'.'.$ext;
+          $testimonial_image_up['testimonial_image'] =  base_url().'assets/images/testimonial/'.$image_name.'.'.$ext;
           $this->Master_Model->update_info('testimonial_id', $testimonial_id, 'smm_testimonial', $testimonial_image_up);
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
@@ -348,9 +351,12 @@ class Res_Master extends CI_Controller{
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
         if ($this->upload->do_upload('testimonial_image') && $testimonial_id && $image_name && $ext && $filename){
-          $testimonial_image_up['testimonial_image'] =  $image_name.'.'.$ext;
+          $testimonial_image_up['testimonial_image'] =  base_url().'assets/images/testimonial/'.$image_name.'.'.$ext;
           $this->Master_Model->update_info('testimonial_id', $testimonial_id, 'smm_testimonial', $testimonial_image_up);
-          if($_POST['old_testimonial_img']){ unlink("assets/images/testimonial/".$_POST['old_testimonial_img']); }
+          if($_POST['old_testimonial_img']){
+            $unlink_image = str_replace(base_url(), "",$_POST['old_testimonial_img']);
+            unlink($unlink_image);
+          }
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
         else{
@@ -387,7 +393,10 @@ class Res_Master extends CI_Controller{
     $testimonial_info = $this->Master_Model->get_info_arr_fields('testimonial_image, testimonial_id', 'testimonial_id', $testimonial_id, 'smm_testimonial');
     if($testimonial_info){
       $testimonial_image = $testimonial_info[0]['testimonial_image'];
-      if($testimonial_image){ unlink("assets/images/testimonial/".$testimonial_image); }
+      if($testimonial_image){
+        $unlink_image = str_replace(base_url(), "",$testimonial_image);
+        unlink($unlink_image);
+      }
     }
     $this->Master_Model->delete_info('testimonial_id', $testimonial_id, 'smm_testimonial');
     $this->session->set_flashdata('delete_success','success');
@@ -425,7 +434,7 @@ class Res_Master extends CI_Controller{
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
         if ($this->upload->do_upload('blog_image') && $blog_id && $image_name && $ext && $filename){
-          $blog_image_up['blog_image'] =  $image_name.'.'.$ext;
+          $blog_image_up['blog_image'] =  base_url().'assets/images/blog/'.$image_name.'.'.$ext;
           $this->Master_Model->update_info('blog_id', $blog_id, 'smm_blog', $blog_image_up);
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
@@ -472,9 +481,12 @@ class Res_Master extends CI_Controller{
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
         if ($this->upload->do_upload('blog_image') && $blog_id && $image_name && $ext && $filename){
-          $blog_image_up['blog_image'] =  $image_name.'.'.$ext;
+          $blog_image_up['blog_image'] =  base_url().'assets/images/blog/'.$image_name.'.'.$ext;
           $this->Master_Model->update_info('blog_id', $blog_id, 'smm_blog', $blog_image_up);
-          if($_POST['old_blog_img']){ unlink("assets/images/blog/".$_POST['old_blog_img']); }
+          if($_POST['old_blog_img']){
+            $unlink_image = str_replace(base_url(), "",$_POST['old_blog_img']);
+            unlink($unlink_image);
+          }
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
         else{
@@ -511,7 +523,10 @@ class Res_Master extends CI_Controller{
     $blog_info = $this->Master_Model->get_info_arr_fields('blog_image, blog_id', 'blog_id', $blog_id, 'smm_blog');
     if($blog_info){
       $blog_image = $blog_info[0]['blog_image'];
-      if($blog_image){ unlink("assets/images/blog/".$blog_image); }
+      if($blog_image){
+        $unlink_image = str_replace(base_url(), "",$blog_image);
+        unlink($unlink_image);
+      }
     }
     $this->Master_Model->delete_info('blog_id', $blog_id, 'smm_blog');
     $this->session->set_flashdata('delete_success','success');
@@ -544,9 +559,12 @@ class Res_Master extends CI_Controller{
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
         if ($this->upload->do_upload('web_setting_logo') && $smm_reseller_id && $image_name && $ext && $filename){
-          $web_setting_logo_up['web_setting_logo'] =  $image_name.'.'.$ext;
+          $web_setting_logo_up['web_setting_logo'] =  base_url().'assets/images/web_setting/'.$image_name.'.'.$ext;
           $this->Master_Model->update_info('reseller_id', $smm_reseller_id, 'smm_web_setting', $web_setting_logo_up);
-          if($_POST['old_web_setting_logo']){ unlink("assets/images/web_setting/".$_POST['old_web_setting_logo']); }
+          if($_POST['old_web_setting_logo']){
+            $unlink_image = str_replace(base_url(), "",$_POST['old_web_setting_logo']);
+            unlink($unlink_image);
+          }
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
         else{
@@ -565,9 +583,12 @@ class Res_Master extends CI_Controller{
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         $this->upload->initialize($config); // if upload library autoloaded
         if ($this->upload->do_upload('web_setting_favicon') && $smm_reseller_id && $image_name && $ext && $filename){
-          $web_setting_favicon_up['web_setting_favicon'] =  $image_name.'.'.$ext;
+          $web_setting_favicon_up['web_setting_favicon'] =  base_url().'assets/images/web_setting/'.$image_name.'.'.$ext;
           $this->Master_Model->update_info('reseller_id', $smm_reseller_id, 'smm_web_setting', $web_setting_favicon_up);
-          if($_POST['old_web_setting_favicon']){ unlink("assets/images/web_setting/".$_POST['old_web_setting_favicon']); }
+          if($_POST['old_web_setting_favicon']){
+            $unlink_image = str_replace(base_url(), "",$_POST['old_web_setting_favicon']);
+            unlink($unlink_image);
+          }
           $this->session->set_flashdata('upload_success','File Uploaded Successfully');
         }
         else{
@@ -601,6 +622,85 @@ class Res_Master extends CI_Controller{
   }
 
 
+
+/*********************************** Web Setup Request *********************************/
+
+  // Add Web Setup Request....
+  public function web_setup_request(){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+    $this->form_validation->set_rules('web_setup_request_no', 'Web Setup Request Name', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      // $web_setup_request_status = $this->input->post('web_setup_request_status');
+      // if(!isset($web_setup_request_status)){ $web_setup_request_status = '1'; }
+      $save_data = $_POST;
+      $save_data['web_setup_request_status'] = '0';
+      $save_data['reseller_id'] = $smm_reseller_id;
+      $save_data['company_id'] = $smm_res_company_id;
+      $save_data['web_setup_request_addedby_type'] = '2';
+      $save_data['web_setup_request_addedby'] = $smm_reseller_id;
+      $web_setup_request_id = $this->Master_Model->save_data('smm_web_setup_request', $save_data);
+
+      $this->session->set_flashdata('save_success','success');
+      header('location:'.base_url().'Reseller/Res_Master/web_setup_request');
+    }
+
+    $data['web_setup_request_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'web_setup_request_addedby_type','2','web_setup_request_addedby',$smm_reseller_id,'','','web_setup_request_id','DESC','smm_web_setup_request');
+    $data['page'] = 'Web Setup Request';
+    $this->load->view('Reseller/Include/head', $data);
+    $this->load->view('Reseller/Include/navbar', $data);
+    $this->load->view('Reseller/Res_Master/web_setup_request', $data);
+    $this->load->view('Reseller/Include/footer', $data);
+  }
+
+  // Edit/Update Web Setup Request...
+  public function edit_web_setup_request($web_setup_request_id){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+    $this->form_validation->set_rules('web_setup_request_no', 'Web Setup Request Name', 'trim|required');
+    if ($this->form_validation->run() != FALSE) {
+      $update_data = $_POST;
+      $this->Master_Model->update_info('web_setup_request_id', $web_setup_request_id, 'smm_web_setup_request', $update_data);
+
+      $this->session->set_flashdata('update_success','success');
+      header('location:'.base_url().'Reseller/Res_Master/web_setup_request');
+    }
+
+    $web_setup_request_info = $this->Master_Model->get_info_arr('web_setup_request_id',$web_setup_request_id,'smm_web_setup_request');
+    if(!$web_setup_request_info){ header('location:'.base_url().'Reseller/Res_Master/web_setup_request'); }
+    $data['update'] = 'update';
+    $data['update_web_setup_request'] = 'update';
+    $data['web_setup_request_info'] = $web_setup_request_info[0];
+    $data['act_link'] = base_url().'Reseller/Res_Master/edit_web_setup_request/'.$web_setup_request_id;
+
+    $data['web_setup_request_list'] = $this->Master_Model->get_list_by_id3($smm_res_company_id,'web_setup_request_addedby_type','2','web_setup_request_addedby',$smm_reseller_id,'','','web_setup_request_id','DESC','smm_web_setup_request');
+    $data['page'] = 'Edit Web Setup Request';
+    $this->load->view('Reseller/Include/head', $data);
+    $this->load->view('Reseller/Include/navbar', $data);
+    $this->load->view('Reseller/Res_Master/web_setup_request', $data);
+    $this->load->view('Reseller/Include/footer', $data);
+  }
+
+  //Delete Web Setup Request...
+  public function delete_web_setup_request($web_setup_request_id){
+    $smm_reseller_id = $this->session->userdata('smm_reseller_id');
+    $smm_res_company_id = $this->session->userdata('smm_res_company_id');
+    if($smm_reseller_id == '' || $smm_res_company_id == ''){ header('location:'.base_url().'Reseller/Res_User'); }
+
+    $web_setup_request_info = $this->Master_Model->get_info_arr_fields('web_setup_request_image, web_setup_request_id', 'web_setup_request_id', $web_setup_request_id, 'smm_web_setup_request');
+    if($web_setup_request_info){
+      $web_setup_request_image = $web_setup_request_info[0]['web_setup_request_image'];
+      if($web_setup_request_image){ unlink("assets/images/web_setup_request/".$web_setup_request_image); }
+    }
+    $this->Master_Model->delete_info('web_setup_request_id', $web_setup_request_id, 'smm_web_setup_request');
+    $this->session->set_flashdata('delete_success','success');
+    header('location:'.base_url().'Reseller/Res_Master/web_setup_request');
+  }
 
 
 

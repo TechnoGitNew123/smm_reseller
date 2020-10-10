@@ -1,8 +1,23 @@
 <?php include('include/head1.php') ?>
 
 <?php
+$smm_reseller_id = $this->session->userdata('smm_reseller_id');
+  $valid_coupon = $this->session->flashdata('valid_coupon');
+require('razorpay-php/Razorpay.php');
+use Razorpay\Api\Api;
 
-    $final_payment_amt = $package_cost;
+  if($smm_reseller_id){
+    if(isset($valid_coupon) && $valid_coupon){
+      if(isset($coupon_applied) && isset($coupon_discount_amount)){
+        $payment_amount = $package_cost - $coupon_discount_amount;
+      } else{
+        $payment_amount = $package_cost;
+      }
+    } else{
+      $payment_amount = $package_cost;
+    }
+
+    $final_payment_amt = $payment_amount;
     if ($final_payment_amt == 0) {
       $final_payment_amt = 1;
     }
@@ -16,9 +31,8 @@
     $customer_email = $reseller_info['reseller_email'];
     $customer_mobile = $reseller_info['reseller_mobile'];
     $org_name = 'SMM';
-    //
-    require('razorpay-php/Razorpay.php');
-    use Razorpay\Api\Api;
+
+
     $api = new Api($key_id, $key_Secret);
     $orderData = [
         'receipt'         => 3456,
@@ -28,6 +42,7 @@
     ];
     $razorpayOrder = $api->order->create($orderData);
     $razorpayOrderId = $razorpayOrder['id'];
+  }
   ?>
 
   <div class="top_strip"></div>
@@ -36,7 +51,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="page-heading">Payment</h1>
+          <h4 class="page-heading"> <i class="fas fa-cart-arrow-down mr-2"></i> ORDER SUMMARY</h4>
         </div>
       </div>
     </div>
@@ -45,75 +60,136 @@
 
 <section class="checkout-middle">
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="billing mb-3">
-          <div class="col-md-12">
-            <h4>Reseller Details</h4>
-            <hr class="grey-hr">
-            <div class="card p-4">
-              <p class="mb-1"><b>Name :</b> <?php echo $reseller_info['reseller_name']; ?></p>
-              <p class="mb-1"><b>Address :</b> <?php echo $reseller_info['reseller_address']; ?></p>
-              <p class="mb-1"><b>Mobile :</b> <?php echo $reseller_info['reseller_mobile']; ?></p>
-              <p class="mb-1"><b>Email :</b> <?php echo $reseller_info['reseller_email']; ?></p>
-            </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card border-shadow pt-5">
+        <div class="d-none d-sm-block">
+        <div class="row bb-1 ">
+          <div class="col-5">
+            <h6>PRODUCT</h6>
+          </div>
+           <div class="col-4">
+            <h6>DURATION</h6>
+          </div>
+           <div class="col-3">
+            <h6>PRICE</h6>
           </div>
         </div>
-        <hr>
-      </div>
-
-      <div class="col-md-4">
-        <div class="billing mb-3">
-          <div class="col-md-12">
-            <h4>Order Summary</h4>
-            <hr class="grey-hr">
-            <div class="card p-4">
-              <p class="mb-1"><b>Package :</b> <?php echo $package_info['package_name']; ?></p>
-              <p class="mb-1"><b>Price :</b> <?php echo $reseller_package_info['reseller_package_new_price']; ?></p>
-
-            </div>
-          </div>
         </div>
-        <hr>
-      </div>
+        <div class="product-row">
+       <div class="row ">
+       <div class="col-md-5 col-12 mt-3">
+        <h4 class="text-green"><?php echo $package_info['package_name']; ?></h4>
+        <p class="f-14">
+          <?php foreach ($package_feature_list as $list) {
+            echo $list->package_feature_name.', ';
+          } ?>
+        </p>
 
-      <div class="col-md-4">
-        <div class="order_summary">
-          <h4 class="text-left">Payment Details</h4>
-          <hr class="grey-hr">
-          <div class="card py-3">
+       </div>
+
+       <div class="col-md-4  col-12 mt-3">
+         <h5>Duration <?php echo $package_info['package_per_duration']; ?> Days  </h5>
+       </div>
+       <div class="col-md-3 col-12 mt-3">
+
+         <h6 class="f-22"> <span class="badge badge-secondary bg-green"><span><i class="fas fa-rupee-sign"></i></span> <?php echo $package_cost; ?></span> </h6>
+       </div>
+
+       </div>
+       </div>
+
+         <div class="row">
+           <div class="col-8 d-none d-sm-block">
+             <hr>
+             <?php if($smm_reseller_id){ ?>
+               <form class="" action="" method="post">
+                 <div class="row">
+                   <div class="form-group col-md-3 ">
+                     <label for="">Coupon Code</label>
+                   </div>
+                   <div class="form-group col-md-6 ">
+                     <input type="text" class="form-control form-control-sm" name="coupon_code" required>
+                   </div>
+                   <div class="form-group col-md-2">
+                     <button type="submit" class="btn btn-sm btn-info" >Apply</button>
+                   </div>
+                 </div>
+               </form>
+             <?php } ?>
+           </div>
+           <div class="col-md-4 col-12">
             <div class="row">
-              <div class="col-7">
-                <p><b>Basic Amount:</b></p>
-                <p><b>GST(Inclusive):</b></p>
+              <div class="col-md-6 col-6 p-0 mt-3">
+                <h6>Basic Amount:</h6>
               </div>
-              <div class="col-5 text-right">
-                <p id=""><?php echo $package_basic_amt; ?></p>
-                <p id=""><?php echo $package_gst_amt; ?></p>
-              </div>
-              <div class="col-12">
-                <hr class="grey-hr">
-              </div>
-              <div class="col-7">
-                <p><b>Total:</b></p>
-              </div>
-              <div class="col-5 text-right">
-                <p id=""><?php echo $package_cost; ?></p>
+               <div class="col-6 p-0 mt-3">
+                <h6><i class="fas fa-rupee-sign"></i><?php echo $package_basic_amt; ?></h6>
               </div>
             </div>
-          </div>
-        </div>
+
+            <div class="row">
+              <div class="col-md-6 col-6 p-0 mt-3">
+                <h6>GST :</h6>
+              </div>
+               <div class="col-6 p-0 mt-3">
+                <h6><i class="fas fa-rupee-sign"></i><?php echo $package_gst_amt; ?></h6>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6 p-0 mt-3">
+                <h6>Total :</h6>
+              </div>
+               <div class="col-6 p-0 mt-3">
+                <h4 class="text-green f-22"><i class="fas fa-rupee-sign"></i><?php echo $package_cost; ?></h4>
+              </div>
+            </div>
+
+            <?php if($valid_coupon){
+              if(isset($coupon_applied) && isset($coupon_discount_amount)){
+            ?>
+            <div class="row">
+              <div class="col-6 p-0 mt-3">
+                <h6>Coupon Discount :</h6>
+              </div>
+               <div class="col-6 p-0 mt-3">
+                <h6 class="text-info"><i class="fas fa-rupee-sign"></i><?php echo $coupon_discount_amount; ?></h6>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6 p-0 mt-3">
+                <h6>Payment Amount :</h6>
+              </div>
+               <div class="col-6 p-0 mt-3">
+                <h4 class="text-green f-22"><i class="fas fa-rupee-sign"></i><?php echo $package_cost - $coupon_discount_amount ; ?></h4>
+              </div>
+            </div>
+
+            <?php } } ?>
+
+             <div class="row text-center">
+              <div class="col-12 p-0 mt-3 mb-5">
+                <?php if($smm_reseller_id){ ?>
+                  <button type="button" onclick="$('.razorpay-payment-button').click()" class="btn btn-outline-success"><b>Make Payment</b></button>
+                <?php } else{ ?>
+                  <a href="<?php echo base_url(); ?>Login" type="button" class="btn btn-outline-success"><b>Make Payment</b></a>
+                <?php } ?>
+              </div>
+            </div>
+           </div>
+         </div>
+
+       </div>
       </div>
-  <div class="col-md-12 text-center" >
-    <div class="alert alert-success d-none" id="amt_alert" role="alert">
     </div>
   </div>
-  <div class="col-md-12 text-center">
-    <button type="button" onclick="$('.razorpay-payment-button').click()" class="btn btn-outline-success"><b>Make Payment</b></button>
-  </div>
+
 </div>
 </section>
-
+  <?php if($smm_reseller_id){ ?>
     <form class="d-none" action="<?php echo base_url(); ?>WebsiteController/payment_success" method="POST">
       <script
       src="https://checkout.razorpay.com/v1/checkout.js"
@@ -132,7 +208,23 @@
       </script>
       <input type="hidden" custom="Hidden Element" name="hidden">
     </form>
-
+  <?php } ?>
       <?php include('include/footer1.php') ?>
   </body>
 </html>
+
+<script src="<?php echo base_url(); ?>assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/toastr/toastr.min.js"></script>
+
+<script type="text/javascript">
+<?php if($this->session->flashdata('valid_coupon')){ ?>
+  $(document).ready(function(){
+    toastr.success('Coupon Applied Successfully');
+  });
+<?php } ?>
+<?php if($this->session->flashdata('invalid_coupon')){ ?>
+  $(document).ready(function(){
+    toastr.error('Invalid Coupon Code');
+  });
+<?php } ?>
+</script>
